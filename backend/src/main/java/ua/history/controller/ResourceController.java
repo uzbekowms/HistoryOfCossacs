@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ua.history.service.ResourceService;
 
-import java.io.InputStream;
 
 @RestController
 public class ResourceController {
