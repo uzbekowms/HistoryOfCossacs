@@ -1,8 +1,5 @@
 package ua.history.model;
 
-import jakarta.persistence.*;
-
-@Table(name = "post_types")
 public enum PostType {
     HISTORY("Історія"),
     NOTABLE_PERSON("Видатні особистості"),
@@ -12,10 +9,14 @@ public enum PostType {
     VIDEO_FOOTAGE("Відеоматеріали"),
     AUDIO_FOOTAGE("Аудіоматеріали");
 
-    @Column(name = "name")
-    private String name;
+
+    private final String name;
 
     PostType(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }
