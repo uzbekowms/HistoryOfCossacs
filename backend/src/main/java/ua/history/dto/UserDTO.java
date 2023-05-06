@@ -1,6 +1,5 @@
-package ua.history.model;
+package ua.history.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDTO {
+
     private int id;
 
     private String nickname;
@@ -23,7 +19,5 @@ public class User {
 
     private String password;
 
-    @Column(name = "profile_picture")
     private String profilePicturePath;
-
 }
