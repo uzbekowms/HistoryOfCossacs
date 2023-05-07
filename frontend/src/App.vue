@@ -1,10 +1,11 @@
 <template>
   <TheHeader />
-  <router-view />
+  <MainPage />
 </template>
 
 <script setup>
 import TheHeader from "@/components/TheHeader.vue";
+import MainPage from "./views/MainPage.vue";
 </script>
 
 <style>
@@ -12,6 +13,7 @@ import TheHeader from "@/components/TheHeader.vue";
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  --accent-color: #3baf2a;
 }
 
 #app {
@@ -19,13 +21,18 @@ import TheHeader from "@/components/TheHeader.vue";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
+  background-color: #1a1515;
 }
 
-html,
+html {
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
 body,
 #app {
-  min-height: 100vh;
+  height: 100%;
 }
 
 .container {
