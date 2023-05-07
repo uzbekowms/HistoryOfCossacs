@@ -14,7 +14,7 @@ import java.util.Date;
 public class ChatMessageDTO {
     private int id;
 
-    private UserDTO sender;
+    private MessageUserDTO sender;
 
     private String message;
 
