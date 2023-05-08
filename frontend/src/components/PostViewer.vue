@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="slider" v-hscroll>
+    <div class="slider">
       <ThePost />
       <ThePost />
       <ThePost />
@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import HScroll from "@koas/v-hscroll";
 import ThePost from "./ThePost.vue";
 </script>
 
@@ -21,7 +20,6 @@ import ThePost from "./ThePost.vue";
 .wrapper {
   height: 100%;
   width: 100%;
-  padding: 3rem 0;
   overflow-x: hidden;
   overflow-y: visible;
 }
@@ -31,6 +29,7 @@ import ThePost from "./ThePost.vue";
   display: flex;
   align-items: center;
   gap: 5rem;
+  padding: 3rem calc(50vw - 160px);
   overflow-x: scroll;
 }
 
@@ -38,11 +37,11 @@ import ThePost from "./ThePost.vue";
   display: none;
 }
 
-.slider:nth-child(even) .post_card {
+.slider:nth-child(even) > .card_wrapper .post_card {
   height: 480px;
 }
 
-.slider:nth-child(even) .post_card__img {
+.slider:nth-child(even) > .card_wrapper .post_card__img {
   aspect-ratio: 1 / 1.5;
 }
 </style>

@@ -35,7 +35,7 @@ export default {};
 <style scoped>
 .post_card {
   position: relative;
-  border: var(--accent-color) solid 1px;
+  /*border: var(--accent-color) solid 1px;*/
   width: 320px;
   height: 320px;
   cursor: pointer;
