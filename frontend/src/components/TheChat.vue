@@ -10,7 +10,6 @@
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      transform="matrix(-1, 0, 0, 1, 0, 0)rotate(0)"
     >
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
       <g
@@ -37,7 +36,14 @@
         <span class="line line2"></span>
       </button>
     </header>
-    <div class="chat__messages-container"></div>
+
+    <div class="chat__messages-container">
+      <div class="chat__wrapper">
+        <TheMessage isOwner />
+        <TheMessage />
+        <TheMessage />
+      </div>
+    </div>
     <div class="chat__input">
       <input type="text" class="chat__input-field" placeholder="Пишіть..." />
       <svg
@@ -66,28 +72,37 @@
   </div>
 </template>
 
-<script>
-import { ref } from "vue";
+<script setup>
+import { ref, defineComponent } from "vue";
+import TheMessage from "./TheMessage.vue";
 
-export default {
-  setup() {
-    let isChatVisible = ref(false);
-
-    return {
-      isChatVisible,
-    };
-  },
-};
+defineComponent(TheMessage);
+let isChatVisible = ref(false);
 </script>
 
 <style scoped>
 .chat__header {
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 10%;
   display: grid;
   place-items: center;
   background-color: #130e0e;
-  position: relative;
+  position: absolute;
+  z-index: 4;
+}
+
+.chat__wrapper {
+  display: flex;
+  height: fit-content;
+  overflow-y: auto;
+  padding-top: 3em;
+  flex-direction: column-reverse;
+}
+
+.chat__wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .chat__header h2 {
@@ -135,11 +150,14 @@ export default {
   position: absolute;
   right: 4em;
   bottom: 4em;
-  z-index: 1;
+  z-index: 3;
   opacity: 0;
   transition: all 0.2s ease;
-  overflow: hidden;
+  overflow-y: auto;
   border-radius: 5px;
+}
+.chat__container::-webkit-scrollbar {
+  display: none;
 }
 
 .chat__button:disabled {
@@ -154,12 +172,18 @@ export default {
 }
 
 .chat__messages-container {
-  height: 77%;
+  display: flex;
+  flex-direction: column;
+  height: 85%;
   padding: 0 0.8em;
+  justify-content: end;
 }
 
 .chat__input {
+  position: absolute;
+  bottom: 0;
   display: flex;
+  width: 100%;
   height: 13%;
   padding: 0 0.8em 0.8em 0.8em;
 }
