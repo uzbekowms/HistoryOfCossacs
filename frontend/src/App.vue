@@ -17,7 +17,7 @@ import MainPage from "./views/MainPage.vue";
 }
 
 #app {
-  font-family: "Inter";
+  font-family: "Playfair Display", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -119,7 +119,7 @@ console.log(props.isOwner);
 
 .message__owner .message__text::before {
   left: auto;
-  right: -8px;
+  right: -7px;
   border-width: 0 15px 15px 0px;
 }
 

@@ -13,10 +13,12 @@ import TheChat from "@/components/TheChat.vue";
 
 <style scoped>
 .post_type__title {
+  font-family: "Inter" serif;
   font-size: 3rem;
   transform: translateY(100px);
   padding: 0.8em;
   z-index: 2;
+  font-weight: 600;
 }
 .main_content {
   display: flex;
