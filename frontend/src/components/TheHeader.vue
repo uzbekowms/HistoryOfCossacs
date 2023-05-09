@@ -137,7 +137,7 @@ header {
 
 .hamburger-lines .line {
   display: block;
-  height: 3px;
+  height: 2px;
   width: 100%;
   border-radius: 10px;
   background-color: white;
@@ -199,7 +199,7 @@ header {
   );
   background-size: 200% 100%;
   background-position: -100%;
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: all 0.2s ease-out;
 }

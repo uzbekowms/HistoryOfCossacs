@@ -15,7 +15,7 @@ import TheChat from "@/components/TheChat.vue";
 .post_type__title {
   font-family: "Inter" serif;
   font-size: 3rem;
-  transform: translateY(100px);
+  transform: translateY(8vh);
   padding: 0.8em;
   z-index: 2;
   font-weight: 600;

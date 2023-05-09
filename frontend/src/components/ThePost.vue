@@ -41,6 +41,9 @@ export default {};
   cursor: pointer;
   z-index: 2;
   transition: all 0.4s ease;
+
+  scroll-snap-align: center;
+  scroll-snap-stop: always; /* code added */
 }
 
 .post_card__text-wrapper {
@@ -97,7 +100,7 @@ export default {};
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform: translateY(-100px);
+  transform: translateY(-10vh);
 }
 
 .post_card__img {
