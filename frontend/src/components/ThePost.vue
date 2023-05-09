@@ -108,6 +108,10 @@ export default {};
   height: 100%;
   aspect-ratio: 1 / 1;
   filter: grayscale(1) brightness(0.4);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .post_card:hover {

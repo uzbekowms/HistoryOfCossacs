@@ -27,7 +27,7 @@ import MainPage from "./views/MainPage.vue";
 
 html {
   height: 100vh;
-  scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 body,

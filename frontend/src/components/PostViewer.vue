@@ -23,7 +23,6 @@ onMounted(() => {
   let isScrolling = false;
 
   function handleScroll(event) {
-    console.log("scroll");
     event.preventDefault();
     if (!isScrolling) {
       isScrolling = true;
