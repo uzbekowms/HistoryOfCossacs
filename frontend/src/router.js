@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import MainPage from '@/views/MainPage.vue'
 import SignupPage from '@/views/SignupPage.vue'
+import LoginPage from '@/views/LoginPage.vue'
 
 const routes = [
   {
@@ -8,8 +9,15 @@ const routes = [
     component: MainPage
   },
   {
-    path: '/login',
+    path: '/signup',
     component: SignupPage,
+    meta: {
+      hideHeader: true
+    }
+  },
+  {
+    path: '/login',
+    component: LoginPage,
     meta: {
       hideHeader: true
     }
