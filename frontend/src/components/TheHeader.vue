@@ -72,7 +72,7 @@
           <ul class="menu__ul">
             <li class="menu__li"><a href="">Мій профіль</a></li>
             <li class="menu__li">
-              <a href="">Увійти в акаунт</a>
+              <router-link to="/login">Увійти в акаунт</router-link>
             </li>
             <li class="menu__li">
               <a href="">Вийти з акаунта</a>
