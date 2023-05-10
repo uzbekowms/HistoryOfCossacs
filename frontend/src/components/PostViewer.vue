@@ -66,11 +66,17 @@ onMounted(() => {
   display: none;
 }
 
-.slider:nth-child(even) > .card_wrapper .post_card {
+.slider .card_wrapper:nth-child(even) .post_card {
   height: 480px;
 }
 
-.slider:nth-child(even) > .card_wrapper .post_card__img {
+.slider .card_wrapper:nth-child(even) .post_card__img {
   aspect-ratio: 1 / 1.5;
+}
+.slider .card_wrapper:nth-child(even) .vertical_line {
+  height: 14vh;
+}
+.slider .card_wrapper:nth-child(even) .date {
+  top: 15vh;
 }
 </style>

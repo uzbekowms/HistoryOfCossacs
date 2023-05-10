@@ -28,7 +28,10 @@
           </ul>
         </nav>
       </button>
-      <button class="profile_button">
+      <button
+        class="profile_button menu__button"
+        @click="profileVisible = !profileVisible"
+      >
         <svg
           fill="#000000"
           height="800px"
@@ -65,6 +68,17 @@
             </g>
           </g>
         </svg>
+        <nav v-if="profileVisible" class="menu__dropdown dropdown__right">
+          <ul class="menu__ul">
+            <li class="menu__li"><a href="">Мій профіль</a></li>
+            <li class="menu__li">
+              <a href="">Увійти в акаунт</a>
+            </li>
+            <li class="menu__li">
+              <a href="">Вийти з акаунта</a>
+            </li>
+          </ul>
+        </nav>
       </button>
     </div>
   </header>
@@ -77,6 +91,7 @@ import { getPostTypes } from "@/utills/api.js";
 export default {
   setup() {
     let menuVisible = ref(false);
+    let profileVisible = ref(false);
     let postTypes = ref([]);
 
     onMounted(async () => {
@@ -84,7 +99,7 @@ export default {
       console.log(postTypes);
     });
 
-    return { menuVisible, postTypes };
+    return { menuVisible, profileVisible, postTypes };
   },
 };
 </script>
@@ -99,6 +114,11 @@ button {
 header {
   background-color: #130e0e;
   z-index: 3;
+}
+
+.profile_button .dropdown__right {
+  right: 0;
+  left: auto;
 }
 
 .header__container {
@@ -121,6 +141,11 @@ header {
 
 .menu__ul {
   padding: 1rem;
+}
+
+.menu__ico {
+  height: 0.5rem;
+  width: 0.5rem;
 }
 
 .hamburger-lines {

@@ -35,7 +35,6 @@ export default {};
 <style scoped>
 .post_card {
   position: relative;
-  /*border: var(--accent-color) solid 1px;*/
   width: 320px;
   height: 320px;
   cursor: pointer;
@@ -43,7 +42,7 @@ export default {};
   transition: all 0.4s ease;
 
   scroll-snap-align: center;
-  scroll-snap-stop: always; /* code added */
+  scroll-snap-stop: always;
 }
 
 .post_card__text-wrapper {
