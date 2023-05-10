@@ -1,18 +1,16 @@
 <template>
-  <div class="form__wrapper">
-    <form class="form__container">
-      <h1 class="form__title">Реєстрація</h1>
-      <TheInput id="nickname" v-model="nickname" title="Логін" />
-      <TheInput id="email" v-model="email" title="Електронна адреса" />
-      <TheInput id="password" v-model="password" title="Пароль" />
-      <TheInput
-        id="passwordConfirmation"
-        v-model="passwordConfirmation"
-        title="Повторіть пароль"
-      />
-      <button class="btn">Зареєструватись</button>
-    </form>
-  </div>
+  <form class="form__container">
+    <h1 class="form__title">Реєстрація</h1>
+    <TheInput id="nickname" v-model="nickname" title="Логін" />
+    <TheInput id="email" v-model="email" title="Електронна адреса" />
+    <TheInput id="password" v-model="password" title="Пароль" />
+    <TheInput
+      id="passwordConfirmation"
+      v-model="passwordConfirmation"
+      title="Повторіть пароль"
+    />
+    <button class="btn">Зареєструватись</button>
+  </form>
 </template>
 
 <script setup>
@@ -30,13 +28,6 @@ let passwordConfirmation = ref("");
   font-family: "Inter";
   font-size: 1.8rem;
   font-weight: 600;
-}
-
-.form__wrapper {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
 }
 
 .form__container {

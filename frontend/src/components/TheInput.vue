@@ -2,6 +2,7 @@
   <div class="input__container">
     <input
       required
+      autocomplete="off"
       :type="props.type"
       :id="props.id"
       class="input__input-field"
