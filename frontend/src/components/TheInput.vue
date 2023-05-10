@@ -56,7 +56,6 @@ const props = defineProps({
 
 .input__input-field {
   background-color: transparent;
-  width: 30em;
   font-size: 1rem;
   border: none;
   outline: none;

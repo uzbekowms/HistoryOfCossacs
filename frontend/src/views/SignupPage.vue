@@ -23,20 +23,4 @@ let password = ref("");
 let passwordConfirmation = ref("");
 </script>
 
-<style scoped>
-.btn {
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 0.6em 0.4em;
-  background-color: transparent;
-  border: 2px white solid;
-  color: white;
-  transition: all ease 0.2s;
-}
-
-.btn:hover {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
-}
-</style>
+<style scoped></style>
