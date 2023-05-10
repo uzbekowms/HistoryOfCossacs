@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header v-show="!$route.meta.hideHeader">
     <div class="container header__container">
       <button @click="menuVisible = !menuVisible" class="menu__button">
         <div class="hamburger-lines">
