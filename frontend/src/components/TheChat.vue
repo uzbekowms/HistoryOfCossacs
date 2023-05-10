@@ -91,6 +91,7 @@ let chatText = ref("");
 let messages = ref([]);
 
 function sendMessage() {
+  if (chatText.value.trim() === "") return;
   messages.value = [
     {
       user: "Test",
