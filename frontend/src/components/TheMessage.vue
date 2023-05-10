@@ -38,10 +38,9 @@
       </g>
     </svg>
     <div class="message__text">
-      <h3 class="message__user-nickname">Nickname</h3>
+      <h3 class="message__user-nickname">{{ props.message?.user }}</h3>
       <p class="message__user-message">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis
-        distinctio reiciendis quasi porro. Earum beatae modi blanditiis corporis
+        {{ props.message?.message }}
       </p>
     </div>
   </div>
@@ -52,6 +51,10 @@ import { defineProps } from "vue";
 
 const props = defineProps({
   isOwner: Boolean,
+  message: {
+    type: Object,
+    required: true,
+  },
 });
 
 console.log(props.isOwner);
@@ -71,6 +74,7 @@ console.log(props.isOwner);
 }
 
 .message__text {
+  font-family: "Inter";
   --message-color: #e5e5e5;
   position: relative;
   display: flex;
@@ -80,7 +84,6 @@ console.log(props.isOwner);
   text-align: left;
   width: 75%;
   gap: 0.2rem;
-  font-family: "Inter" sans-serif;
   background-color: var(--message-color);
   border-radius: 10px;
   padding: 0.6em;
@@ -101,6 +104,10 @@ console.log(props.isOwner);
 
 .message__user-nickname {
   font-weight: 600;
+}
+
+.message__user-message {
+  word-break: break-all;
 }
 
 .message__owner {

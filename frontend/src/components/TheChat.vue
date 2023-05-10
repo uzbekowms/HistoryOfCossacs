@@ -39,14 +39,23 @@
 
     <div class="chat__messages-container">
       <div class="chat__wrapper">
-        <TheMessage isOwner />
-        <TheMessage />
-        <TheMessage />
+        <TheMessage
+          v-for="message in messages"
+          :key="message"
+          :message="message"
+        />
       </div>
     </div>
     <div class="chat__input">
-      <input type="text" class="chat__input-field" placeholder="Пишіть..." />
+      <input
+        @keyup.enter="sendMessage"
+        type="text"
+        class="chat__input-field"
+        placeholder="Пишіть..."
+        v-model="chatText"
+      />
       <svg
+        @click="sendMessage"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -78,6 +87,18 @@ import TheMessage from "./TheMessage.vue";
 
 defineComponent(TheMessage);
 let isChatVisible = ref(false);
+let chatText = ref("");
+let messages = ref([]);
+
+function sendMessage() {
+  messages.value = [
+    {
+      user: "Test",
+      message: chatText.value.trim(),
+    },
+  ].concat(messages.value);
+  chatText.value = "";
+}
 </script>
 
 <style scoped>
