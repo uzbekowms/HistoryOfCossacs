@@ -50,4 +50,19 @@ let props = defineProps({
   background-color: var(--accent-color);
   border-color: var(--accent-color);
 }
+
+.link {
+  font-family: "Inter";
+}
+
+a {
+  font-family: inherit;
+  font-weight: 600;
+  color: white;
+  transition: color ease 0.2s;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
 </style>

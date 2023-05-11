@@ -3,6 +3,10 @@
     <TheInput title="Логін" id="login" v-model="login" />
     <TheInput title="Пароль" id="password" v-model="password" />
     <button class="btn">Увійти</button>
+    <span class="link"
+      >Не маєте акаунт?
+      <router-link to="/signup">Зареєструватись</router-link></span
+    >
   </FormSkeleton>
 </template>
 

@@ -42,6 +42,7 @@ const props = defineProps({
 .input__container {
   position: relative;
   font-family: "Inter";
+  width: 20rem;
 }
 
 .input__title {
@@ -55,6 +56,7 @@ const props = defineProps({
 }
 
 .input__input-field {
+  width: 100%;
   background-color: transparent;
   font-size: 1rem;
   border: none;

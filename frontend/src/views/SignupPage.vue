@@ -9,6 +9,9 @@
       title="Повторіть пароль"
     />
     <button class="btn">Зареєструватись</button>
+    <span class="link"
+      >Вже маєте акаунт? <router-link to="/login">Увійти</router-link></span
+    >
   </FormSkeleton>
 </template>
 
