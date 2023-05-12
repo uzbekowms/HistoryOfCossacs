@@ -33,7 +33,15 @@
             </svg>
           </button>
         </div>
-        <button class="search__add-button">
+        <button
+          class="search__add-button"
+          @click="
+            {
+              modalWindowIsVisible = !modalWindowIsVisible;
+              isPost = false;
+            }
+          "
+        >
           <svg
             width="64px"
             height="64px"
@@ -73,11 +81,20 @@
       </div>
     </div>
   </div>
+  <ModalWindow
+    v-show="modalWindowIsVisible"
+    @click.prevent="modalWindowIsVisible = !modalWindowIsVisible"
+  ></ModalWindow>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import TheInput from "@/components/TheInput.vue";
 import PostCard from "@/components/PostCard.vue";
+import ModalWindow from "../components/ModalWindow.vue";
+
+let modalWindowIsVisible = ref(false);
+let isPost = ref(false);
 </script>
 
 <style scoped>
