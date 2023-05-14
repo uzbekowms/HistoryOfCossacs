@@ -81,10 +81,9 @@
       </div>
     </div>
   </div>
-  <ModalWindow
-    v-show="modalWindowIsVisible"
-    @click.prevent="modalWindowIsVisible = !modalWindowIsVisible"
-  ></ModalWindow>
+  <ModalWindow v-show="modalWindowIsVisible">
+    <AddPost />
+  </ModalWindow>
 </template>
 
 <script setup>
@@ -92,6 +91,7 @@ import { ref } from "vue";
 import TheInput from "@/components/TheInput.vue";
 import PostCard from "@/components/PostCard.vue";
 import ModalWindow from "../components/ModalWindow.vue";
+import AddPost from "@/components/AddPost.vue";
 
 let modalWindowIsVisible = ref(false);
 let isPost = ref(false);

@@ -1,11 +1,15 @@
 <template>
-  <div class="modal"></div>
+  <div class="modal">
+    <slot></slot>
+  </div>
 </template>
 
 <script></script>
 
 <style scoped>
 .modal {
+  display: grid;
+  place-items: center;
   position: absolute;
   top: 0;
   bottom: 0;

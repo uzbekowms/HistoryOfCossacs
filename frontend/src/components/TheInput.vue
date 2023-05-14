@@ -8,6 +8,9 @@
       class="input__input-field"
       :value="modelValue"
       @input="(event) => $emit('update:modelValue', event.target.value)"
+      accept="image/*"
+      capture
+      lang="uk"
     />
     <label v-if="props.title" :for="props.id" class="input__title">{{
       props.title
@@ -80,5 +83,14 @@ const props = defineProps({
 
 .input__input-field:focus ~ .input__title {
   color: var(--accent-color);
+}
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+input[type="date"]:not(:valid)::-webkit-datetime-edit-text,
+input[type="date"]:not(:valid)::-webkit-datetime-edit-year-field,
+input[type="date"]:not(:valid)::-webkit-datetime-edit-month-field,
+input[type="date"]:not(:valid)::-webkit-datetime-edit-day-field {
+  color: transparent;
 }
 </style>
