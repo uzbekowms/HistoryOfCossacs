@@ -8,4 +8,17 @@ const getPostTypes = async () => {
   return data;
 };
 
-export { getPostTypes };
+const savePost = async (post) => {
+  fetch(`${API_URL}/posts`, {
+    method: "post",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(post),
+  }).then((response) => {
+    console.log(response);
+  });
+};
+
+export { getPostTypes, savePost };

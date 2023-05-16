@@ -1,6 +1,6 @@
 package ua.history.controller;
 
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.history.model.Post;
@@ -10,9 +10,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
-@Setter
 public class PostController {
 
+    @Autowired
     private PostService postService;
 
     @GetMapping("/{id}")

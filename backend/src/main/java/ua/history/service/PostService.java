@@ -1,7 +1,7 @@
 package ua.history.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.history.model.Post;
 import ua.history.repository.PostRepository;
@@ -9,9 +9,9 @@ import ua.history.repository.PostRepository;
 import java.util.List;
 
 @Service
-@Setter
 public class PostService {
 
+    @Autowired
     private PostRepository postRepository;
 
     public List<Post> getAll() {

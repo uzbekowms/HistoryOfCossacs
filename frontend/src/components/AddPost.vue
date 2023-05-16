@@ -20,19 +20,20 @@
         <TheInput
           title="Заголовок поста"
           id="post_title"
-          v-model="post.postTitle"
+          v-model="post.title"
         />
+        <TheInput title="Тип поста" id="post_type" v-model="post.postType" />
         <TheInput
           title="Дата початку"
           id="post_date-start"
           type="date"
-          v-model="post.postStartDate"
+          v-model="post.dateStart"
         />
         <TheInput
           title="Дата кінця"
           id="post_date-end"
           type="date"
-          v-model="post.postEndDate"
+          v-model="post.dateEnd"
         />
       </fieldset>
 
@@ -56,7 +57,9 @@
         >
           Відмінити
         </button>
-        <button class="add-post__btn primary-btn">Додати</button>
+        <button class="add-post__btn primary-btn" @click.prevent="save">
+          Додати
+        </button>
       </div>
     </form>
   </div>
@@ -65,13 +68,15 @@
 <script setup>
 import { ref, watch, reactive } from "vue";
 import TheInput from "@/components/TheInput.vue";
+import { savePost } from "@/utills/api.js";
 
 let post = reactive({
   postImage: ref(),
-  postTitle: ref(""),
-  postStartDate: ref(null),
-  postEndDate: ref(null),
+  title: ref(""),
+  dateStart: ref(null),
+  dateEnd: ref(null),
   description: ref(""),
+  postType: ref(),
 });
 
 let errors = ref([]);
@@ -79,18 +84,18 @@ let errors = ref([]);
 watch(post, () => {
   errors.value = [];
 
-  if (post.postStartDate > post.postEndDate)
+  if (post.dateStart > post.dateEnd)
     errors.value.push("Дата початку не може бути після дати кінця");
 
   if (
-    new Date(post.postEndDate) > new Date() ||
-    new Date(post.postStartDate) > new Date()
+    new Date(post.dateEnd) > new Date() ||
+    new Date(post.dateStart) > new Date()
   )
     errors.value.push("Не можна ставити майбутню дату");
 
   if (post.postImage === null) errors.value.push("Фото не може бути порожнім");
 
-  if (post.postTitle.trim() === "")
+  if (post.title.trim() === "")
     errors.value.push("Заголовок не може бути порожнім");
 
   if (post.description.trim() === "")
@@ -106,6 +111,14 @@ const handleImageChange = (event) => {
     };
     reader.readAsDataURL(file);
   }
+};
+
+const save = () => {
+  if (errors.value.length) {
+    console.log("err");
+    return;
+  }
+  savePost(post);
 };
 </script>
 
