@@ -13,6 +13,7 @@ import TheHeader from "@/components/TheHeader.vue";
   margin: 0;
   padding: 0;
   --accent-color: #3baf2a;
+  --error-color: #f10808;
 }
 
 #app {
@@ -26,7 +27,6 @@ import TheHeader from "@/components/TheHeader.vue";
 
 html {
   height: 100vh;
-  overflow: hidden;
 }
 
 body,

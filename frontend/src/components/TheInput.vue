@@ -1,7 +1,7 @@
 <template>
   <div class="input__container">
     <input
-      required
+      :required="type !== 'date'"
       autocomplete="off"
       :type="props.type"
       :id="props.id"
@@ -11,6 +11,7 @@
       accept="image/*"
       capture
       lang="uk"
+      :max="new Date()"
     />
     <label v-if="props.title" :for="props.id" class="input__title">{{
       props.title
@@ -32,7 +33,7 @@ const props = defineProps({
   },
   modelValue: {
     required: true,
-    type: [String, Number],
+    type: [String, Number, null],
   },
   type: {
     type: String,
@@ -41,11 +42,12 @@ const props = defineProps({
 });
 </script>
 
-<style scoped>
+<style>
 .input__container {
   position: relative;
   font-family: "Inter";
   width: 20rem;
+  text-align: center;
 }
 
 .input__title {
@@ -70,7 +72,6 @@ const props = defineProps({
   background-color: #1a1515;
   transition: all ease 0.2s;
 }
-
 .input__input-field:valid ~ .input__title,
 .input__input-field:focus ~ .input__title {
   top: -0.6rem;
@@ -84,6 +85,19 @@ const props = defineProps({
 .input__input-field:focus ~ .input__title {
   color: var(--accent-color);
 }
+
+.datepicker .dp__input_icon {
+  left: auto;
+  right: 1rem;
+}
+.datepicker input {
+  color: white;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px #888888 solid;
+  border-radius: 0;
+}
+
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
@@ -92,5 +106,34 @@ input[type="date"]:not(:valid)::-webkit-datetime-edit-year-field,
 input[type="date"]:not(:valid)::-webkit-datetime-edit-month-field,
 input[type="date"]:not(:valid)::-webkit-datetime-edit-day-field {
   color: transparent;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+input[type="file"] ~ .input__title {
+  position: initial;
+  border: white solid 2px;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+
+input[type="file"] ~ .input__title::after {
+  content: url("@/assets/ico/upload.svg");
+  margin-left: 0.2rem;
+  transform: translateY(10px);
+  width: 1rem;
+  height: 1rem;
+}
+
+input[type="file"]:hover ~ .input__title {
+  border: none;
+  background-color: var(--accent-color);
 }
 </style>

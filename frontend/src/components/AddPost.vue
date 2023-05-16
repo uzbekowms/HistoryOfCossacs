@@ -1,45 +1,127 @@
 <template>
-  <form class="container form">
-    <h2 class="add-post__title">Додати пост</h2>
-    <fieldset class="add-post__inputs">
-      <TheInput title="Фото поста" id="post_img" />
-      <TheInput title="Заголовок поста" id="post_title" />
-      <TheInput title="Дата початку" id="post_date-start" type="date" />
-      <TheInput title="Дата кінця" id="post_date-end" type="date" />
-    </fieldset>
-    <h3 class="add-post__title">Текст поста</h3>
-    <textarea
-      name=""
-      id=""
-      cols="30"
-      rows="10"
-      class="add-post__description"
-    ></textarea>
-    <div class="add-post__container">
-      <button class="add-post__btn secondary-btn">Відмінити</button>
-      <button class="add-post__btn primary-btn">Додати</button>
-    </div>
-  </form>
+  <div class="form-container container">
+    <form class="form">
+      <h2 class="add-post__title">Додати пост</h2>
+      <img
+        :src="post.postImage"
+        alt="Post img"
+        v-show="post.postImage"
+        class="add-post__image"
+      />
+      <fieldset class="add-post__inputs">
+        <div class="post__img">
+          <TheInput
+            title="Фото поста"
+            id="post_img"
+            type="file"
+            @change="handleImageChange"
+          />
+        </div>
+        <TheInput
+          title="Заголовок поста"
+          id="post_title"
+          v-model="post.postTitle"
+        />
+        <TheInput
+          title="Дата початку"
+          id="post_date-start"
+          type="date"
+          v-model="post.postStartDate"
+        />
+        <TheInput
+          title="Дата кінця"
+          id="post_date-end"
+          type="date"
+          v-model="post.postEndDate"
+        />
+      </fieldset>
+
+      <h3 class="add-post__title">Текст поста</h3>
+      <textarea
+        v-model="post.description"
+        name=""
+        id=""
+        cols="30"
+        rows="10"
+        class="add-post__description"
+      ></textarea>
+
+      <ul class="errors">
+        <li v-for="error in errors" :key="error">{{ error }}</li>
+      </ul>
+      <div class="add-post__container">
+        <button class="add-post__btn secondary-btn">Відмінити</button>
+        <button class="add-post__btn primary-btn">Додати</button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script setup>
+import { ref, watch, reactive } from "vue";
 import TheInput from "@/components/TheInput.vue";
+
+let post = reactive({
+  postImage: ref(),
+  postTitle: ref(""),
+  postStartDate: ref(null),
+  postEndDate: ref(null),
+  description: ref(""),
+});
+
+let errors = ref([]);
+
+watch(post, () => {
+  errors.value = [];
+
+  if (post.postStartDate > post.postEndDate)
+    errors.value.push("Дата початку не може бути після дати кінця");
+
+  if (
+    new Date(post.postEndDate) > new Date() ||
+    new Date(post.postStartDate) > new Date()
+  )
+    errors.value.push("Не можна ставити майбутню дату");
+
+  if (post.postImage === null) errors.value.push("Фото не може бути порожнім");
+
+  if (post.postTitle.trim() === "")
+    errors.value.push("Заголовок не може бути порожнім");
+
+  if (post.description.trim() === "")
+    errors.value.push("Стаття не може бути порожньою");
+});
+
+const handleImageChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      post.postImage = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+};
 </script>
 
 <style scoped>
 .form {
   background-color: #1a1515;
-  width: 100%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
+
+.form-container {
+  height: 80vh;
+  overflow: auto;
+  width: 100%;
+}
 .add-post__title {
   font-size: 2rem;
   font-weight: 600;
 }
-
 .add-post__inputs {
   margin-top: 1rem;
   display: flex;
@@ -94,5 +176,21 @@ import TheInput from "@/components/TheInput.vue";
 input[type="date"]:focus::before,
 input[type="date"]:valid::before {
   content: "";
+}
+
+.add-post__image {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.errors {
+  color: var(--error-color);
+}
+
+.post__img {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding: 2rem 0;
 }
 </style>
