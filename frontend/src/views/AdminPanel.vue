@@ -3,7 +3,12 @@
     <div class="container">
       <nav class="search">
         <div class="search__field">
-          <TheInput title="Пошук" class="search__input" id="search" />
+          <TheInput
+            title="Пошук"
+            class="search__input"
+            id="search"
+            v-model="search"
+          />
           <button class="search__button">
             <svg
               width="64px"
@@ -81,8 +86,11 @@
       </div>
     </div>
   </div>
-  <ModalWindow v-show="modalWindowIsVisible">
-    <AddPost />
+  <ModalWindow
+    v-show="modalWindowIsVisible"
+    @click="modalWindowIsVisible = false"
+  >
+    <AddPost @closeModal="closeModal" @click.stop="" />
   </ModalWindow>
 </template>
 
@@ -95,6 +103,11 @@ import AddPost from "@/components/AddPost.vue";
 
 let modalWindowIsVisible = ref(false);
 let isPost = ref(false);
+let search = ref("");
+
+const closeModal = () => {
+  modalWindowIsVisible.value = false;
+};
 </script>
 
 <style scoped>

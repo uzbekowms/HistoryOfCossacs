@@ -50,7 +50,12 @@
         <li v-for="error in errors" :key="error">{{ error }}</li>
       </ul>
       <div class="add-post__container">
-        <button class="add-post__btn secondary-btn">Відмінити</button>
+        <button
+          class="add-post__btn secondary-btn"
+          @click.prevent="$emit('closeModal')"
+        >
+          Відмінити
+        </button>
         <button class="add-post__btn primary-btn">Додати</button>
       </div>
     </form>
