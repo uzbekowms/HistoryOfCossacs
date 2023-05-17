@@ -1,6 +1,24 @@
 <template>
   <div class="input__container">
+    <select
+      v-if="type === 'select'"
+      name=""
+      :id="id"
+      class="input__input-field"
+      v-model="selectedValue"
+      @change="$emit('update:modelValue', selectedValue)"
+    >
+      <option value="" disabled selected></option>
+      <option
+        v-for="optionItem in options"
+        :key="optionItem"
+        :value="optionItem"
+      >
+        {{ optionItem }}
+      </option>
+    </select>
     <input
+      v-else
       :required="type !== 'date'"
       autocomplete="off"
       :type="props.type"
@@ -8,7 +26,7 @@
       class="input__input-field"
       :value="modelValue"
       @input="(event) => $emit('update:modelValue', event.target.value)"
-      accept="image/*"
+      :accept="props.accept"
       capture
       lang="uk"
       :max="new Date()"
@@ -20,7 +38,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 
 const props = defineProps({
   id: {
@@ -38,7 +56,16 @@ const props = defineProps({
     type: String,
     default: "text",
   },
+  options: {
+    type: Array,
+  },
+  accept: {
+    type: String,
+    default: "",
+  },
 });
+
+const selectedValue = ref(props.modelValue);
 </script>
 
 <style>

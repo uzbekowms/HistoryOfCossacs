@@ -1,8 +1,10 @@
 package ua.history.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.history.dto.PostRequest;
 import ua.history.model.Post;
 import ua.history.service.PostService;
 
@@ -26,12 +28,12 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Post> savePost(@RequestBody Post post) {
+    public ResponseEntity<Post> savePost(@RequestBody @Valid PostRequest post) {
         return ResponseEntity.ok(postService.save(post));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable int id, @RequestBody Post post) {
+    public ResponseEntity<Post> updatePost(@PathVariable int id, @RequestBody @Valid PostRequest post) {
         return ResponseEntity.ok(postService.update(id, post));
     }
 }

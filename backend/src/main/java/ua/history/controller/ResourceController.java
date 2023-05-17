@@ -3,10 +3,8 @@ package ua.history.controller;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.history.service.ResourceService;
 
 
@@ -20,8 +18,14 @@ public class ResourceController {
         this.resourceService = resourceService;
     }
 
-    @GetMapping(value = "/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<InputStreamResource> getImage(@PathVariable String path) {
-        return ResponseEntity.ok(resourceService.getFile(path));
+    @GetMapping(value = "/images/{name}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<InputStreamResource> getImage(@PathVariable String name) {
+        return ResponseEntity.ok(resourceService.getFile(name, "/files/"));
     }
+
+    @PostMapping("/images")
+    public ResponseEntity<String> writeImage(@RequestBody MultipartFile file) {
+        return ResponseEntity.ok(resourceService.writeFile(file));
+    }
+
 }
