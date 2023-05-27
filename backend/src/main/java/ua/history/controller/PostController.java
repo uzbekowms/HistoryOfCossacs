@@ -28,12 +28,12 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Post> savePost(@RequestBody @Valid PostRequest post) {
+    public ResponseEntity<Post> savePost(@ModelAttribute @Valid PostRequest post) {
         return ResponseEntity.ok(postService.save(post));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable int id, @RequestBody @Valid PostRequest post) {
+    public ResponseEntity<Post> updatePost(@PathVariable int id, @ModelAttribute @Valid PostRequest post) {
         return ResponseEntity.ok(postService.update(id, post));
     }
 

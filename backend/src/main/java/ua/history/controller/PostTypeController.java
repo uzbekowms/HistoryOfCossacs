@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.history.model.PostType;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/post_types")
 public class PostTypeController {
 
     @GetMapping
-    public ResponseEntity<List<String>> getPostTypes() {
-        return ResponseEntity.ok(Arrays.stream(PostType.class.getEnumConstants()).map(PostType::getName).toList());
+    public ResponseEntity<Map<String, String>> getPostTypes() {
+        return ResponseEntity.ok(Arrays.stream(PostType.values()).collect(Collectors.toMap(PostType::name, PostType::getName)));
     }
 }

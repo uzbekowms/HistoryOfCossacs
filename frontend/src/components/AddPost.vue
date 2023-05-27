@@ -2,9 +2,6 @@
   <div class="form-container container">
     <form class="form">
       <h2 class="add-post__title">Додати пост</h2>
-      <img
-        src="http://localhost:8000/api/v1/files/images/aa604ece-6a68-47e9-a6db-21bcaea6fbd6.jpg"
-      />
       <audio
         :src="post.postImage"
         v-if="post.postType === 'Аудіоматеріали'"

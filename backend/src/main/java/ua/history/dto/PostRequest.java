@@ -1,6 +1,7 @@
 package ua.history.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 import ua.history.model.PostType;
@@ -15,7 +16,8 @@ public class PostRequest {
     private String title;
 
     private String description;
-    @NotBlank(message = "Файл поста не може бути порожнім")
+
+    @NotNull(message = "Файл поста не може бути порожнім")
     private MultipartFile postFile;
 
     private PostType postType;

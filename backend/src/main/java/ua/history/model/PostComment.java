@@ -13,11 +13,13 @@ public class PostComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "post_id")
-    private int postId;
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private Post post;
 
-    @Column(name = "user_id")
-    private int userId;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User owner;
 
     private String comment;
     private Date timestamp;

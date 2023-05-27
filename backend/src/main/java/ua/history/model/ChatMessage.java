@@ -14,7 +14,7 @@ public class ChatMessage {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "sender_id", referencedColumnName = "id")
     private User sender;
 
     private String message;
