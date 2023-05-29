@@ -41,4 +41,6 @@ public class PostController {
     public ResponseEntity<Boolean> deletePost(@PathVariable int id) {
         return ResponseEntity.ok(postService.delete(id));
     }
+
+
 }
