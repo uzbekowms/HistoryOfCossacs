@@ -9,13 +9,16 @@ const getPostTypes = async () => {
 };
 
 const savePost = async (post) => {
+  let formdata = new FormData();
+  formdata.append(
+    "post",
+    new Blob([JSON.stringify(post)], { type: "application/json" })
+  );
+  formdata.append("file", new Blob([post.postFile, post.postFile.name]));
+  console.log(...formdata);
   fetch(`${API_URL}/posts`, {
-    method: "post",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(post),
+    method: "POST",
+    body: formdata,
   }).then((response) => {
     console.log(response);
   });

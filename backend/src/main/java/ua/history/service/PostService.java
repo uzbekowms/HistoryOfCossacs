@@ -1,8 +1,8 @@
 package ua.history.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ua.history.dto.PostRequest;
 import ua.history.factory.PostFactory;
 import ua.history.model.Post;
@@ -13,11 +13,14 @@ import java.util.List;
 @Service
 public class PostService {
 
-    @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
-    @Autowired
-    ResourceService resourceService;
+    private final ResourceService resourceService;
+
+    public PostService(PostRepository postRepository, ResourceService resourceService) {
+        this.postRepository = postRepository;
+        this.resourceService = resourceService;
+    }
 
     public List<Post> getAll() {
         return postRepository.findAll();
@@ -28,18 +31,22 @@ public class PostService {
                 new EntityNotFoundException("Cannot get post. Post not found with id: " + id));
     }
 
-    public Post save(PostRequest post) {
-        String fileName = resourceService.writeFile(post.getPostFile());
-        Post postToSave = PostFactory.fromDto(post, fileName);
 
+    public Post save(PostRequest post, MultipartFile file) {
+        Post postToSave = PostFactory.fromDto(post);
+        String filename = resourceService.writeFile(file);
+        postToSave.setPreviewImagePath(filename);
         return postRepository.save(postToSave);
     }
 
-    public Post update(int id, PostRequest post) {
+    public Post update(int id, PostRequest post, MultipartFile file) {
         if (!postRepository.existsById(id))
             throw new EntityNotFoundException("Cannot update post. Post not found");
 
-        return this.save(post);
+        Post postToSave = PostFactory.fromDto(post);
+        resourceService.updateFile(file, postToSave.getPreviewImagePath());
+
+        return postRepository.save(postToSave);
     }
 
     public boolean delete(int id) {

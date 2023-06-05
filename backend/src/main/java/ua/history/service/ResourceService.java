@@ -18,15 +18,21 @@ public class ResourceService {
     }
 
     public String writeFile(@Nonnull MultipartFile file) {
+        String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
+        writeFile(file, fileName);
+        return fileName;
+    }
+
+    public void updateFile(@Nonnull MultipartFile file, String filename) {
+        writeFile(file, filename);
+    }
+
+
+    private void writeFile(MultipartFile file, String filename) {
         try {
-            String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
             String uploadDir = getClass().getResource("/images/").getPath();
-            System.out.println(uploadDir);
-
-            File dest = new File(uploadDir + fileName);
+            File dest = new File(uploadDir + filename);
             file.transferTo(dest);
-
-            return fileName;
         } catch (IOException e) {
             throw new RuntimeException("Не вдалось зберегти файл");
         }

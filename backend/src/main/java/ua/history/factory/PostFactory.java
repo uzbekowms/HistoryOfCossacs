@@ -1,5 +1,7 @@
 package ua.history.factory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import ua.history.dto.PostRequest;
 import ua.history.model.Post;
 
@@ -13,7 +15,8 @@ public class PostFactory {
                 .postType(postRequest.getPostType())
                 .dateStart(postRequest.getDateStart())
                 .dateEnd(postRequest.getDateEnd())
-                .previewImagePath(postRequest.getPostFile().getName())
+                .previewImagePath(postRequest.getPathToFile())
+                //.previewImagePath(postRequest.getPostFile().getName())
                 .build();
     }
 

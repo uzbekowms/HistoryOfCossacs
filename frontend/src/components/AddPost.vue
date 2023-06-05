@@ -3,19 +3,19 @@
     <form class="form">
       <h2 class="add-post__title">Додати пост</h2>
       <audio
-        :src="post.postImage"
+        :src="post.postFile"
         v-if="post.postType === 'Аудіоматеріали'"
       ></audio>
       <video
         :src="postImage"
         v-else-if="post.postType === 'Відеоматеріали'"
-        v-show="post.postImage"
+        v-show="post.postFile"
       ></video>
       <img
         v-else
-        :src="post.postImage"
+        :src="post.postFile"
         alt="Post img"
-        v-show="post.postImage"
+        v-show="post.postFile"
         class="add-post__image"
       />
       <fieldset class="add-post__inputs">
@@ -91,7 +91,7 @@ import TheInput from "@/components/TheInput.vue";
 import { savePost, getPostTypes } from "@/utills/api.js";
 
 let post = reactive({
-  postImage: ref(),
+  postFile: ref(),
   title: ref(""),
   dateStart: ref(null),
   dateEnd: ref(null),
@@ -125,7 +125,7 @@ watch(post, () => {
   if (post.title.trim() === "")
     errors.value.push("Заголовок не може бути порожнім");
 
-  if (post.postImage === undefined)
+  if (post.postFile === undefined)
     errors.value.push("Файл не може бути порожнім");
 
   if (isFilePost.value) return;
@@ -148,7 +148,7 @@ const handleImageChange = (event) => {
   if (file) {
     const reader = new FileReader();
     reader.onload = () => {
-      post.postImage = reader.result;
+      post.postFile = reader.result;
     };
     reader.readAsDataURL(file);
   }
@@ -156,7 +156,6 @@ const handleImageChange = (event) => {
 
 const save = () => {
   if (errors.value.length) {
-    console.log("err");
     return;
   }
   savePost(post);

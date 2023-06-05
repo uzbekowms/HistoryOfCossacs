@@ -29,6 +29,10 @@ html {
   height: 100vh;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 body,
 #app {
   height: 100%;

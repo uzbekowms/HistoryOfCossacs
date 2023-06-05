@@ -56,9 +56,7 @@ const props = defineProps({
     type: String,
     default: "text",
   },
-  options: {
-    type: Array,
-  },
+  options: Object,
   accept: {
     type: String,
     default: "",
