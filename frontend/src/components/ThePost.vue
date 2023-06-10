@@ -2,34 +2,37 @@
   <div class="card_wrapper">
     <div class="post_card">
       <img
-        src="../assets/testimages/test1.png"
+        :src="
+          'http://localhost:8000/api/v1/files/' + props.post.previewImagePath
+        "
         alt="Post Image"
         class="post_card__img"
       />
       <div class="post_card__text-wrapper">
-        <h2 class="post_card__title">Козаки придністров'я</h2>
+        <h2 class="post_card__title">{{ props.post.title }}</h2>
         <p class="post_card__description">
-          На загал, козаки були місцевим населенням, організованим для захисту
-          південних кордонів від нападів військ Османської імперії та її васалів
-          князями, які на той час володіли землями по Дніпро. С. Плохій на
-          початковому етапі формування відзначав значний відсоток білорусів[3].
-          Ряд істориків визначали за пращурів козацтва бродників, берладників,
-          та болохівців[11]. Першими козацькими гетьманами літописці та пізніші
-          історики називають черкаського та канівського старосту — Остафія
-          Дашкевича і хмільницького старосту — Прецлава Лянцкоронського. Також
-          згадується Юрій Пац[12].
+          {{ props.post.description }}
         </p>
       </div>
     </div>
-    <div class="date_separator">
+    <div
+      class="date_separator"
+      v-show="props.post.dateStart || props.post.dateEnd"
+    >
       <div class="vertical_line"></div>
-      <span class="date">1970</span>
+      <span class="date"
+        >{{ formatDate(props.post.dateStart) }} —
+        {{ formatDate(props.post.dateEnd) }}</span
+      >
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { defineProps } from "vue";
+import { formatDate } from "@/utills/formatter.js";
+
+const props = defineProps({ post: Object });
 </script>
 
 <style scoped>

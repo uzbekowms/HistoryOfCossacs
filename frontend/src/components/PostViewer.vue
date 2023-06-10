@@ -1,24 +1,26 @@
 <template>
   <div class="wrapper">
     <div class="slider" ref="slider">
-      <ThePost />
-      <ThePost />
-      <ThePost />
-      <ThePost />
-      <ThePost />
-      <ThePost />
-      <ThePost />
+      <ThePost
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+        @click="emit('selectPost', post)"
+      />
     </div>
+    <h2 v-show="!posts.length" class="floating-label">Нема постів</h2>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
 import ThePost from "./ThePost.vue";
+import { getPosts } from "../utills/api.js";
 
 const slider = ref(null);
+let posts = ref([]);
 
-onMounted(() => {
+onMounted(async () => {
   const sliderElement = slider.value;
   let isScrolling = false;
 
@@ -38,7 +40,11 @@ onMounted(() => {
   }
 
   sliderElement.addEventListener("wheel", handleScroll);
+
+  posts.value = await getPosts();
 });
+
+const emit = defineEmits(["selectPost"]);
 </script>
 
 <style>
@@ -78,5 +84,13 @@ onMounted(() => {
 }
 .slider .card_wrapper:nth-child(even) .date {
   top: 15vh;
+}
+
+.floating-label {
+  position: absolute;
+  font-size: 2rem;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 </style>

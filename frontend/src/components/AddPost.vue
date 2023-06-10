@@ -82,11 +82,23 @@
         </button>
       </div>
     </form>
+    <ModalWindow v-show="modalIsVisible">
+      <div class="popup">
+        <h3 class="popup__text">{{ modalText }}</h3>
+        <button
+          @click="modalIsVisible = false"
+          class="add-post__btn primary-btn"
+        >
+          Закрити
+        </button>
+      </div>
+    </ModalWindow>
   </div>
 </template>
 
 <script setup>
 import { ref, watch, reactive, onMounted } from "vue";
+import ModalWindow from "./ModalWindow.vue";
 import TheInput from "@/components/TheInput.vue";
 import { savePost, getPostTypes } from "@/utills/api.js";
 
@@ -103,6 +115,8 @@ let errors = ref([]);
 let postTypes = ref([]);
 let isFilePost = ref(true);
 let fileType = ref("");
+let modalIsVisible = ref(false);
+let modalText = ref("");
 
 let fileTypes = {
   Відеоматеріали: "video/*",
@@ -158,7 +172,14 @@ const save = () => {
   if (errors.value.length) {
     return;
   }
-  savePost(post);
+  if (
+    savePost(post).catch((err) => {
+      modalText.value = err;
+    })
+  ) {
+    modalIsVisible.value = true;
+    modalText.value = "Пост був успішно збережений!";
+  }
 };
 </script>
 
@@ -255,5 +276,17 @@ input[type="date"]:valid::before {
 video {
   width: 50%;
   margin: 0 auto;
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: #1a1515;
+}
+
+.popup__text {
+  font-size: 1.5rem;
 }
 </style>

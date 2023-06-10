@@ -1,27 +1,23 @@
 <template>
   <div class="post-card__container">
-    <img src="@/assets/testimages/test1.png" alt="Img" class="post-card__img" />
+    <img
+      :src="'http://localhost:8000/api/v1/files/' + props.post.previewImagePath"
+      alt="Post card Image"
+      class="post-card__img"
+    />
     <div class="post-card__text">
-      <h3 class="post-card__title">Title</h3>
+      <h3 class="post-card__title">
+        {{ props.post.title
+        }}<span
+          class="post-card__title-year"
+          v-show="props.post.dateStart || props.post.dateEnd"
+        >
+          ({{ formatDate(props.post?.dateStart) }} —
+          {{ formatDate(props.post?.dateEnd) }})</span
+        >
+      </h3>
       <p class="post-card__description">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
-        dolores esse nesciunt! Modi accusamus, quod maxime, molestias aspernatur
-        facere pariatur ab possimus excepturi assumenda veritatis nostrum at
-        amet! Vero, obcaecati! Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Porro voluptatibus natus inventore iure?
-        Necessitatibus dolores magnam culpa dolorem odio. Totam optio odit
-        molestiae deleniti ea pariatur labore et, animi porro. Lorem ipsum dolor
-        sit amet consectetur adipisicing elit. Voluptates excepturi consequuntur
-        ducimus ratione! Eaque accusantium beatae repellendus praesentium
-        adipisci, debitis nostrum odit vitae vero aspernatur. At ab ducimus
-        reiciendis cumque! Lorem ipsum dolor sit, amet consectetur adipisicing
-        elit. Explicabo ab vitae ut deleniti impedit reprehenderit laboriosam
-        esse! Impedit tenetur eveniet exercitationem autem ea, placeat, commodi
-        iusto voluptates, velit aliquid deleniti! Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Eum accusantium quia, dignissimos iste
-        sapiente tenetur ea nemo delectus inventore fuga animi veritatis
-        dolores, deleniti incidunt odio! Dignissimos dolorem suscipit
-        consequuntur.
+        {{ props.post.description }}
       </p>
     </div>
     <div class="post-card__buttons">
@@ -109,7 +105,14 @@
   </div>
 </template>
 
-<script></script>
+<script setup>
+import { defineProps } from "vue";
+import { formatDate } from "@/utills/formatter.js";
+
+const props = defineProps({
+  post: Object,
+});
+</script>
 
 <style scoped>
 .post-card__container {
@@ -165,5 +168,9 @@
 }
 .post-card__buttons button:hover svg * {
   stroke: white;
+}
+
+.post-card__title-year {
+  font-size: 0.7em;
 }
 </style>

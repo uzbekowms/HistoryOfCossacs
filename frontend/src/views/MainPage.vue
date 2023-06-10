@@ -1,14 +1,28 @@
 <template>
   <main class="main_content">
     <h1 class="post_type__title">Історія козацтва</h1>
-    <PostViewer />
+    <PostViewer @select-post="selectPost" />
     <TheChat />
+    <ModalWindow v-show="modalIsVisible" @click="modalIsVisible = false">
+      <PostPage :post="currentPost" @click.stop="" />
+    </ModalWindow>
   </main>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import PostViewer from "../components/PostViewer.vue";
 import TheChat from "@/components/TheChat.vue";
+import ModalWindow from "@/components/ModalWindow.vue";
+import PostPage from "./PostPage.vue";
+
+let modalIsVisible = ref(false);
+let currentPost = ref();
+
+function selectPost(post) {
+  currentPost.value = post;
+  modalIsVisible.value = true;
+}
 </script>
 
 <style scoped>

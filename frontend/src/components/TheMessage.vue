@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted } from "vue";
 
 const props = defineProps({
   isOwner: Boolean,
@@ -56,6 +56,11 @@ const props = defineProps({
     required: true,
   },
 });
+
+onMounted(() => {
+  document.querySelector(".chat__wrapper").scrollTop = 0;
+
+})
 
 console.log(props.isOwner);
 </script>

@@ -24,5 +24,4 @@ public class PostRequest {
 
     private String pathToFile;
 
-    //private MultipartFile postFile;
 }

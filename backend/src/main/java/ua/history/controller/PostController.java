@@ -1,8 +1,8 @@
 package ua.history.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ua.history.dto.PostRequest;
 import ua.history.model.Post;
 import ua.history.service.PostService;
@@ -30,14 +30,20 @@ public class PostController {
         return ResponseEntity.ok(postService.getAll());
     }
 
-    @PostMapping()
-    public ResponseEntity<Post> savePost(@RequestPart("post") PostRequest post, @RequestPart(value = "file") MultipartFile file) {
-        return ResponseEntity.ok(postService.save(post, file));
+    /* @PostMapping()
+     public ResponseEntity<Post> savePost(@RequestPart(value = "post") PostRequest post) {
+         System.out.println(post);
+         return ResponseEntity.ok(postService.save(post));
+     }*/
+    @PostMapping
+    public ResponseEntity<Post> savePost(@RequestBody PostRequest post) {
+        System.out.println(post);
+        return ResponseEntity.ok(postService.save(post));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable int id, @RequestPart("post") PostRequest post, @RequestPart(value = "file") MultipartFile file) {
-        return ResponseEntity.ok(postService.update(id, post, file));
+    public ResponseEntity<Post> updatePost(@PathVariable int id, @RequestPart("post") PostRequest post) {
+        return ResponseEntity.ok(postService.update(id, post));
     }
 
     @DeleteMapping("/{id}")

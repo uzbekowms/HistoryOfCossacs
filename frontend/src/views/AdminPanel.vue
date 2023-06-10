@@ -77,11 +77,7 @@
       </nav>
       <div class="posts__container">
         <div class="posts__wrapper">
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
+          <PostCard v-for="post in filteredPosts" :key="post.id" :post="post" />
         </div>
       </div>
     </div>
@@ -95,19 +91,45 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 import TheInput from "@/components/TheInput.vue";
 import PostCard from "@/components/PostCard.vue";
 import ModalWindow from "../components/ModalWindow.vue";
 import AddPost from "@/components/AddPost.vue";
+import { getPosts } from "@/utills/api.js";
 
 let modalWindowIsVisible = ref(false);
 let isPost = ref(false);
 let search = ref("");
+let posts = ref([]);
+let filteredPosts = ref([]);
 
 const closeModal = () => {
   modalWindowIsVisible.value = false;
 };
+
+onMounted(async () => {
+  posts.value = await getPosts();
+  filteredPosts.value = posts.value;
+});
+
+watch(search, () => {
+  if (!search.value) {
+    filteredPosts.value = posts.value;
+    return;
+  }
+  filteredPosts.value = posts.value.filter(
+    (post) =>
+      post.title
+        .toLowerCase()
+        .includes(
+          search.value.toLowerCase() ||
+            post.description.toLowerCase().includes(search.value.toLowerCase())
+        ) ||
+      post?.dateStart?.toLowerCase()?.includes(search.value.toLowerCase()) ||
+      post?.dateEnd?.toLowerCase()?.includes(search.value.toLowerCase())
+  );
+});
 </script>
 
 <style scoped>

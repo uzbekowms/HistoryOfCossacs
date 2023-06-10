@@ -8,20 +8,30 @@ const getPostTypes = async () => {
   return data;
 };
 
-const savePost = async (post) => {
-  let formdata = new FormData();
-  formdata.append(
-    "post",
-    new Blob([JSON.stringify(post)], { type: "application/json" })
+const getPosts = async () => {
+  let data = await fetch(`${API_URL}/posts`).then((response) =>
+    response.json()
   );
-  formdata.append("file", new Blob([post.postFile, post.postFile.name]));
-  console.log(...formdata);
-  fetch(`${API_URL}/posts`, {
-    method: "POST",
-    body: formdata,
-  }).then((response) => {
-    console.log(response);
-  });
+  console.log(data);
+  return data;
 };
 
-export { getPostTypes, savePost };
+const savePost = async (post) => {
+  fetch(`${API_URL}/posts`, {
+    method: "POST",
+    body: JSON.stringify(post),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      console.log(response);
+      return response.ok;
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+};
+
+export { getPostTypes, savePost, getPosts };

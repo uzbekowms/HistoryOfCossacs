@@ -121,6 +121,8 @@ function sendMessage() {
   overflow-y: auto;
   padding-top: 3em;
   flex-direction: column-reverse;
+  scroll-behavior: smooth;
+  transition: all ease 0.2s;
 }
 
 .chat__wrapper::-webkit-scrollbar {
@@ -143,7 +145,7 @@ function sendMessage() {
   border: none;
   opacity: 0.5;
   transition: all 0.2s ease;
-  z-index: 2;
+  z-index: 15;
 }
 
 .chat__button svg {
@@ -172,7 +174,7 @@ function sendMessage() {
   position: absolute;
   right: 4em;
   bottom: 4em;
-  z-index: 3;
+  z-index: 16;
   opacity: 0;
   transition: all 0.2s ease;
   overflow-y: auto;
@@ -247,5 +249,21 @@ function sendMessage() {
 
 .line2 {
   transform: rotate(-45deg);
+}
+
+@media (max-width: 500px) {
+  .chat__button {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .chat__container {
+    right: 2rem;
+    bottom: 2rem;
+  }
+
+  .visible {
+    width: 17em;
+  }
 }
 </style>
