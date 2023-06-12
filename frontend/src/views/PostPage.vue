@@ -8,6 +8,7 @@
         alt="Post Image"
         class="post__img"
       />
+      <button class="post__close-btn" @click="emit('closeModal')"></button>
       <div class="post__body">
         <h2 class="post__title">
           {{ props.post?.title }}
@@ -109,12 +110,14 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 import { formatDate } from "@/utills/formatter";
 
 const props = defineProps({
   post: Object,
 });
+
+const emit = defineEmits(["closeModal"]);
 </script>
 
 <style scoped>
@@ -124,6 +127,7 @@ const props = defineProps({
   overflow: auto;
 }
 .post__container {
+  position: relative;
   width: 100%;
   background-color: #1a1515;
   overflow: auto;
@@ -154,5 +158,29 @@ const props = defineProps({
 
 .post__description {
   line-height: 1.4rem;
+}
+
+.post__close-btn {
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  border: none;
+}
+
+.post__close-btn::after {
+  position: absolute;
+  font-size: 4rem;
+  right: 0;
+  top: 0;
+  content: "\00d7";
+  color: black;
+  padding: 0 1rem;
+  transition: all ease 0.2s;
+  cursor: pointer;
+}
+
+.post__close-btn:hover::after {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
 }
 </style>

@@ -2,6 +2,7 @@ package ua.history.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 import ua.history.model.PostType;
 
 import java.util.Date;
@@ -23,5 +24,6 @@ public class PostRequest {
     private Date dateEnd;
 
     private String pathToFile;
+
 
 }

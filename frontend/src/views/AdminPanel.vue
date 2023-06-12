@@ -77,7 +77,12 @@
       </nav>
       <div class="posts__container">
         <div class="posts__wrapper">
-          <PostCard v-for="post in filteredPosts" :key="post.id" :post="post" />
+          <PostCard
+            v-for="post in filteredPosts"
+            :key="post.id"
+            :post="post"
+            @destroy="showModal"
+          />
         </div>
       </div>
     </div>
@@ -88,6 +93,26 @@
   >
     <AddPost @closeModal="closeModal" @click.stop="" />
   </ModalWindow>
+  <ModalWindow
+    v-show="deleteModalIsVisible"
+    @click="deleteModalIsVisible = false"
+  >
+    <div class="delete-form" @click.stop="">
+      <h3 class="delete-form__title">Видалити пост?</h3>
+      <button
+        @click="deleteModalIsVisible = false"
+        class="delete-form__button primary-btn"
+      >
+        Ні
+      </button>
+      <button
+        @click="removePost(currentPostId)"
+        class="delete-form__button secondary-btn"
+      >
+        Так
+      </button>
+    </div>
+  </ModalWindow>
 </template>
 
 <script setup>
@@ -96,13 +121,15 @@ import TheInput from "@/components/TheInput.vue";
 import PostCard from "@/components/PostCard.vue";
 import ModalWindow from "../components/ModalWindow.vue";
 import AddPost from "@/components/AddPost.vue";
-import { getPosts } from "@/utills/api.js";
+import { getPosts, deletePost } from "@/utills/api.js";
 
 let modalWindowIsVisible = ref(false);
 let isPost = ref(false);
 let search = ref("");
 let posts = ref([]);
 let filteredPosts = ref([]);
+let deleteModalIsVisible = ref(false);
+let currentPostId = ref();
 
 const closeModal = () => {
   modalWindowIsVisible.value = false;
@@ -130,6 +157,20 @@ watch(search, () => {
       post?.dateEnd?.toLowerCase()?.includes(search.value.toLowerCase())
   );
 });
+
+function showModal(id) {
+  deleteModalIsVisible.value = true;
+  currentPostId.value = id;
+}
+
+async function removePost(id) {
+  await deletePost(id).then((response) => {
+    posts.value = posts.value.filter((post) => post.id !== id);
+    filteredPosts.value = posts.value;
+    deleteModalIsVisible.value = false;
+    console.log(response);
+  });
+}
 </script>
 
 <style scoped>
@@ -193,5 +234,24 @@ watch(search, () => {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.delete-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #1a1515;
+  padding: 2rem;
+}
+
+.delete-form__title {
+  font-size: 1.6rem;
+  flex-grow: 2;
+}
+
+.delete-form__button {
+  font-size: 1.2rem;
+  flex-wrap: wrap;
+  flex-grow: 1;
 }
 </style>

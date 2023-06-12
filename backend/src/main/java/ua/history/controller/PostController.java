@@ -1,12 +1,16 @@
 package ua.history.controller;
 
-import org.springframework.http.MediaType;
+import com.sun.jersey.multipart.FormDataBodyPart;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.FormDataParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.history.dto.PostRequest;
 import ua.history.model.Post;
 import ua.history.service.PostService;
 
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -35,10 +39,12 @@ public class PostController {
          System.out.println(post);
          return ResponseEntity.ok(postService.save(post));
      }*/
-    @PostMapping
-    public ResponseEntity<Post> savePost(@RequestBody PostRequest post) {
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<Post> savePost(@RequestPart("post") PostRequest post, @RequestPart("file") InputStream file) {
         System.out.println(post);
-        return ResponseEntity.ok(postService.save(post));
+        System.out.println(file);
+        //return ResponseEntity.ok(postService.save(post));
+        return null;
     }
 
     @PutMapping("/{id}")

@@ -17,12 +17,12 @@ const getPosts = async () => {
 };
 
 const savePost = async (post) => {
+  let formData = new FormData();
+  formData.append("post", JSON.stringify(post));
+  formData.append("file", post.postFile);
   fetch(`${API_URL}/posts`, {
     method: "POST",
-    body: JSON.stringify(post),
-    headers: {
-      "Content-Type": "application/json",
-    },
+    body: formData,
   })
     .then((response) => {
       console.log(response);
@@ -34,4 +34,14 @@ const savePost = async (post) => {
     });
 };
 
-export { getPostTypes, savePost, getPosts };
+const deletePost = async (id) => {
+  let answer;
+  await fetch(`${API_URL}/posts/${id}`, {
+    method: "DELETE",
+  }).then((response) => {
+    answer = response.json();
+  });
+  return answer;
+};
+
+export { getPostTypes, savePost, getPosts, deletePost };

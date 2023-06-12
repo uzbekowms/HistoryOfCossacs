@@ -4,7 +4,7 @@
     <PostViewer @select-post="selectPost" />
     <TheChat />
     <ModalWindow v-show="modalIsVisible" @click="modalIsVisible = false">
-      <PostPage :post="currentPost" @click.stop="" />
+      <PostPage :post="currentPost" @click.stop="" @close-modal="closeModal" />
     </ModalWindow>
   </main>
 </template>
@@ -23,6 +23,10 @@ function selectPost(post) {
   currentPost.value = post;
   modalIsVisible.value = true;
 }
+
+function closeModal() {
+  modalIsVisible.value = false;
+}
 </script>
 
 <style scoped>
@@ -36,8 +40,8 @@ function selectPost(post) {
 }
 .main_content {
   display: flex;
-  height: 93.5%;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  height: 91%;
 }
 </style>

@@ -234,17 +234,6 @@ const save = () => {
   color: white;
 }
 
-.primary-btn {
-  background-color: white;
-  color: #1a1515;
-}
-
-.secondary-btn {
-  background-color: transparent;
-  outline: white 2px solid;
-  color: white;
-}
-
 .add-post__container {
   display: flex;
   justify-content: end;

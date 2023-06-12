@@ -62,7 +62,7 @@
           </g>
         </svg>
       </button>
-      <button>
+      <button @click="emit('destroy', props.post.id)">
         <svg
           width="64px"
           height="64px"
@@ -106,12 +106,14 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 import { formatDate } from "@/utills/formatter.js";
 
 const props = defineProps({
   post: Object,
 });
+
+const emit = defineEmits(["destroy"]);
 </script>
 
 <style scoped>

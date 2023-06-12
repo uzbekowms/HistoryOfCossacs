@@ -27,6 +27,7 @@ import TheHeader from "@/components/TheHeader.vue";
 
 html {
   height: 100vh;
+  overflow: auto;
 }
 
 ::-webkit-scrollbar {
@@ -42,5 +43,41 @@ body,
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 30px;
+}
+
+.primary-btn,
+.secondary-btn {
+  transition: all ease 0.2s;
+  padding: 0.5em 2em;
+}
+
+.primary-btn {
+  background-color: white;
+  color: #1a1515;
+}
+
+.secondary-btn {
+  background-color: transparent;
+  outline: white 2px solid;
+  color: white;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+  outline: none;
+  background-color: var(--accent-color);
+  color: white;
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  html {
+    font-size: 12px;
+  }
 }
 </style>
