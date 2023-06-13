@@ -35,8 +35,9 @@ public class ResourceService {
         return fileName;
     }
 
-    public void updateFile(@Nonnull MultipartFile file, String filename) {
+    public String updateFile(@Nonnull MultipartFile file, String filename) {
         saveFile(file, filename);
+        return filename;
     }
 
 

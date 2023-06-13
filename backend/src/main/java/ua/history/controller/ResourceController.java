@@ -30,4 +30,9 @@ public class ResourceController {
     public ResponseEntity<String> writeImage(@RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok(resourceService.writeFile(file));
     }
+
+    @PutMapping("/{name:.+}")
+    public ResponseEntity<String> writeImage(@RequestParam("file") MultipartFile file, @PathVariable String name) {
+        return ResponseEntity.ok(resourceService.updateFile(file, name));
+    }
 }

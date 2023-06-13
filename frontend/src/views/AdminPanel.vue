@@ -81,7 +81,9 @@
             v-for="post in filteredPosts"
             :key="post.id"
             :post="post"
+            @edit="editPost(post)"
             @destroy="showModal"
+            @click="openPost(post)"
           />
         </div>
       </div>
@@ -91,7 +93,7 @@
     v-show="modalWindowIsVisible"
     @click="modalWindowIsVisible = false"
   >
-    <AddPost @closeModal="closeModal" @click.stop="" />
+    <AddPost @closeModal="closeModal" @click.stop="" :post="currentPost" />
   </ModalWindow>
   <ModalWindow
     v-show="deleteModalIsVisible"
@@ -113,14 +115,22 @@
       </button>
     </div>
   </ModalWindow>
+  <ModalWindow v-show="postModalIsVisible" @click="postModalIsVisible = false">
+    <PostPage
+      :post="currentPost"
+      @close-modal="postModalIsVisible = false"
+      @click.stop=""
+    />
+  </ModalWindow>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, reactive } from "vue";
 import TheInput from "@/components/TheInput.vue";
 import PostCard from "@/components/PostCard.vue";
 import ModalWindow from "../components/ModalWindow.vue";
 import AddPost from "@/components/AddPost.vue";
+import PostPage from "./PostPage.vue";
 import { getPosts, deletePost } from "@/utills/api.js";
 
 let modalWindowIsVisible = ref(false);
@@ -130,9 +140,26 @@ let posts = ref([]);
 let filteredPosts = ref([]);
 let deleteModalIsVisible = ref(false);
 let currentPostId = ref();
+let postModalIsVisible = ref(false);
+let currentPost = reactive({
+  postType: null,
+  dateEnd: null,
+  description: null,
+  title: null,
+});
 
 const closeModal = () => {
   modalWindowIsVisible.value = false;
+};
+
+const editPost = (post) => {
+  currentPost.value = post;
+  modalWindowIsVisible.value = true;
+};
+
+const openPost = (post) => {
+  currentPost.value = post;
+  postModalIsVisible.value = true;
 };
 
 onMounted(async () => {

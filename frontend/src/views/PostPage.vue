@@ -173,7 +173,7 @@ const emit = defineEmits(["closeModal"]);
   right: 0;
   top: 0;
   content: "\00d7";
-  color: black;
+  color: var(--accent-color);
   padding: 0 1rem;
   transition: all ease 0.2s;
   cursor: pointer;

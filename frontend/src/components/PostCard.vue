@@ -21,7 +21,7 @@
       </p>
     </div>
     <div class="post-card__buttons">
-      <button>
+      <button @click.stop="emit('edit')">
         <svg
           width="64px"
           height="64px"
@@ -62,7 +62,7 @@
           </g>
         </svg>
       </button>
-      <button @click="emit('destroy', props.post.id)">
+      <button @click.stop="emit('destroy', props.post.id)">
         <svg
           width="64px"
           height="64px"
@@ -113,7 +113,7 @@ const props = defineProps({
   post: Object,
 });
 
-const emit = defineEmits(["destroy"]);
+const emit = defineEmits(["destroy", "edit"]);
 </script>
 
 <style scoped>

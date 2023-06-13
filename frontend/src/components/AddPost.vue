@@ -97,19 +97,25 @@
 </template>
 
 <script setup>
-import { ref, watch, reactive, onMounted } from "vue";
+import { ref, watch, reactive, onMounted, defineProps } from "vue";
 import ModalWindow from "./ModalWindow.vue";
 import TheInput from "@/components/TheInput.vue";
 import { savePost, getPostTypes, saveFile } from "@/utills/api.js";
 
-let post = reactive({
-  postFile: ref(),
-  title: ref(""),
-  dateStart: ref(null),
-  dateEnd: ref(null),
-  description: ref(""),
-  postType: ref(),
+const props = defineProps({
+  post: Object,
 });
+
+let post = reactive(props.post);
+
+//let post = reactive({
+//  postFile: ref(),
+//  title: ref(""),
+//  dateStart: ref(null),
+//  dateEnd: ref(null),
+//  description: ref(""),
+//  postType: ref(),
+//});
 
 let errors = ref([]);
 let postTypes = ref([]);
@@ -137,15 +143,13 @@ watch(post, () => {
   fileType.value = fileTypes[post.postType] || "image/*";
   errors.value = [];
 
-  if (post.title.trim() === "")
-    errors.value.push("Заголовок не може бути порожнім");
+  if (post.title?.trim()) errors.value.push("Заголовок не може бути порожнім");
 
-  if (post.postFile === undefined)
-    errors.value.push("Файл не може бути порожнім");
+  if (post?.postFile) errors.value.push("Файл не може бути порожнім");
 
   if (isFilePost.value) return;
 
-  if (post.dateStart > post.dateEnd)
+  if (post?.dateStart > post.dateEnd)
     errors.value.push("Дата початку не може бути після дати кінця");
 
   if (
@@ -154,7 +158,7 @@ watch(post, () => {
   )
     errors.value.push("Не можна ставити майбутню дату");
 
-  if (post.description.trim() === "")
+  if (post.description?.trim())
     errors.value.push("Стаття не може бути порожньою");
 });
 
