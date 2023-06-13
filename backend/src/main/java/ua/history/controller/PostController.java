@@ -39,12 +39,10 @@ public class PostController {
          System.out.println(post);
          return ResponseEntity.ok(postService.save(post));
      }*/
-    @PostMapping(consumes = {"application/octet-stream", "multipart/form-data"})
-    public ResponseEntity<Post> savePost(@RequestPart("post") PostRequest post, @RequestParam("file") MultipartFile file) {
+    @PostMapping
+    public ResponseEntity<Post> savePost(@RequestBody PostRequest post) {
         System.out.println(post);
-        System.out.println(file);
-        //return ResponseEntity.ok(postService.save(post));
-        return null;
+        return ResponseEntity.ok(postService.save(post));
     }
 
     @PutMapping("/{id}")

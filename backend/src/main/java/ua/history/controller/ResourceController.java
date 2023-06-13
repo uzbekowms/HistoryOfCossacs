@@ -26,7 +26,7 @@ public class ResourceController {
         return ResponseEntity.ok(resourceService.getFile(name));
     }
 
-    @PostMapping("/images")
+    @PostMapping
     public ResponseEntity<String> writeImage(@RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok(resourceService.writeFile(file));
     }

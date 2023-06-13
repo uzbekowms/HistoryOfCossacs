@@ -100,7 +100,7 @@
 import { ref, watch, reactive, onMounted } from "vue";
 import ModalWindow from "./ModalWindow.vue";
 import TheInput from "@/components/TheInput.vue";
-import { savePost, getPostTypes } from "@/utills/api.js";
+import { savePost, getPostTypes, saveFile } from "@/utills/api.js";
 
 let post = reactive({
   postFile: ref(),
@@ -117,7 +117,7 @@ let isFilePost = ref(true);
 let fileType = ref("");
 let modalIsVisible = ref(false);
 let modalText = ref("");
-let filePreview = ref()
+let filePreview = ref();
 
 let fileTypes = {
   Відеоматеріали: "video/*",
@@ -158,8 +158,9 @@ watch(post, () => {
     errors.value.push("Стаття не може бути порожньою");
 });
 
-const handleImageChange = (event) => {
+const handleImageChange = async (event) => {
   post.postFile = event.target.files[0];
+  post.pathToFile = await saveFile(post.postFile);
   if (post.postFile) {
     const reader = new FileReader();
     reader.onload = () => {

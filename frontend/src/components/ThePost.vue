@@ -3,7 +3,7 @@
     <div class="post_card">
       <img
         :src="
-          'http://localhost:8000/api/v1/files/' + props.post.previewImagePath
+          'http://localhost:8000/api/v1/files/' + props.post?.previewImagePath
         "
         alt="Post Image"
         class="post_card__img"

@@ -16,7 +16,6 @@ public class PostRequest {
 
     private String description;
 
-
     private PostType postType;
 
     private Date dateStart;
@@ -24,7 +23,5 @@ public class PostRequest {
     private Date dateEnd;
 
     private String pathToFile;
-
-
 
 }

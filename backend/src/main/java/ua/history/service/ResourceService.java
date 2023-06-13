@@ -29,8 +29,8 @@ public class ResourceService {
     public String writeFile(@Nonnull MultipartFile file) {
         System.out.println(file.getName());
         System.out.println(file.getContentType());
-        String fileName = UUID.randomUUID() + "." + FilenameUtils.getName(file.getOriginalFilename());
-        System.out.println("extension - " + FilenameUtils.getName(file.getOriginalFilename()));
+        String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
+        System.out.println("extension - " + FilenameUtils.getExtension(file.getOriginalFilename()));
         saveFile(file, fileName);
         return fileName;
     }

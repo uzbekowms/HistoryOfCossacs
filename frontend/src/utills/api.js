@@ -3,30 +3,19 @@ import axios from "axios";
 const API_URL = "http://localhost:8000/api/v1";
 
 const getPostTypes = async () => {
-  return await axios(`${API_URL}/post_types`).then((response) =>
-    JSON.stringify(response.data)
-  );
+  return await axios(`${API_URL}/post_types`).then((response) => response.data);
 };
 
 const getPosts = async () => {
-  return await axios(`${API_URL}/posts`).then((response) =>
-    JSON.stringify(response.data)
-  );
+  return await axios(`${API_URL}/posts`).then((response) => response.data);
 };
 
 const savePost = async (post) => {
-  let formdata = new FormData();
-  formdata.append("post", JSON.stringify(post));
-  formdata.append("file", post.postFile);
   return await axios(`${API_URL}/posts`, {
     method: "POST",
-    data: formdata,
-    headers: {
-      Accept: "application/json",
-      "Content-type": "multipart/form-data",
-    },
+    data: post,
   }).then((response) => {
-    JSON.stringify(response.data);
+    response.data;
   });
 };
 
@@ -34,8 +23,17 @@ const deletePost = async (id) => {
   return await axios(`${API_URL}/posts/${id}`, {
     method: "DELETE",
   }).then((response) => {
-    JSON.stringify(response.data);
+    response.data;
   });
 };
 
-export { getPostTypes, savePost, getPosts, deletePost };
+const saveFile = async (file) => {
+  let formdata = new FormData();
+  formdata.append("file", file);
+  return await axios(`${API_URL}/files`, {
+    data: formdata,
+    method: "POST",
+  }).then((response) => response.data);
+};
+
+export { getPostTypes, savePost, getPosts, deletePost, saveFile };
