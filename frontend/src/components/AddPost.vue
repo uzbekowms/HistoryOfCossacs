@@ -3,19 +3,19 @@
     <form class="form">
       <h2 class="add-post__title">Додати пост</h2>
       <audio
-        :src="post.postFile"
+        :src="filePreview"
         v-if="post.postType === 'Аудіоматеріали'"
       ></audio>
       <video
-        :src="postImage"
+        :src="filePreview"
         v-else-if="post.postType === 'Відеоматеріали'"
-        v-show="post.postFile"
+        v-show="filePreview"
       ></video>
       <img
         v-else
-        :src="post.postFile"
+        :src="filePreview"
         alt="Post img"
-        v-show="post.postFile"
+        v-show="filePreview"
         class="add-post__image"
       />
       <fieldset class="add-post__inputs">
@@ -117,6 +117,7 @@ let isFilePost = ref(true);
 let fileType = ref("");
 let modalIsVisible = ref(false);
 let modalText = ref("");
+let filePreview = ref()
 
 let fileTypes = {
   Відеоматеріали: "video/*",
@@ -158,13 +159,13 @@ watch(post, () => {
 });
 
 const handleImageChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
+  post.postFile = event.target.files[0];
+  if (post.postFile) {
     const reader = new FileReader();
     reader.onload = () => {
-      post.postFile = reader.result;
+      filePreview.value = reader.result;
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(post.postFile);
   }
 };
 

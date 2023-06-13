@@ -39,8 +39,8 @@ public class PostController {
          System.out.println(post);
          return ResponseEntity.ok(postService.save(post));
      }*/
-    @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Post> savePost(@RequestPart("post") PostRequest post, @RequestPart("file") InputStream file) {
+    @PostMapping(consumes = {"application/octet-stream", "multipart/form-data"})
+    public ResponseEntity<Post> savePost(@RequestPart("post") PostRequest post, @RequestParam("file") MultipartFile file) {
         System.out.println(post);
         System.out.println(file);
         //return ResponseEntity.ok(postService.save(post));
