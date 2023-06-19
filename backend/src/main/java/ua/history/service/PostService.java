@@ -1,6 +1,8 @@
 package ua.history.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.history.dto.PostRequest;
@@ -14,22 +16,18 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
 
     private final ResourceService resourceService;
 
-    private Map<String, String> fileTypes = Map.of("Аудіоматеріали", ".mp3", "Відеоматеріали", ".mp4");
-
-    public PostService(PostRepository postRepository, ResourceService resourceService) {
-        this.postRepository = postRepository;
-        this.resourceService = resourceService;
-    }
+    private final Map<String, String> fileTypes = Map.of("Аудіоматеріали", ".mp3", "Відеоматеріали", ".mp4");
 
     public List<Post> getAll() {
         System.out.println(postRepository.findAll());
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.ASC, "dateStart"));
     }
 
     public Post getById(int id) {

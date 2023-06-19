@@ -17,6 +17,7 @@ public class ChatController {
     private final ChatMessageService chatMessageService;
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessageDTO message){
-
+        ChatMessageDTO saved = chatMessageService.save(message);
+        messagingTemplate.convertAndSendToUser("1","/queue/messages", saved);
     }
 }
