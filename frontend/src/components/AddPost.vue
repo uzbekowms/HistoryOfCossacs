@@ -97,7 +97,7 @@
 </template>
 
 <script setup>
-import { ref, watch, reactive, onMounted, defineProps } from "vue";
+import { ref, watch, onMounted, defineProps, toRefs } from "vue";
 import ModalWindow from "./ModalWindow.vue";
 import TheInput from "@/components/TheInput.vue";
 import { savePost, getPostTypes, saveFile } from "@/utills/api.js";
@@ -106,16 +106,15 @@ const props = defineProps({
   post: Object,
 });
 
-let post = reactive(props.post);
-
 //let post = reactive({
-//  postFile: ref(),
-//  title: ref(""),
-//  dateStart: ref(null),
-//  dateEnd: ref(null),
-//  description: ref(""),
-//  postType: ref(),
+//  postFile: null,
+//  title: "",
+//  dateStart: null,
+//  dateEnd: null,
+//  description: "",
+//  postType: "",
 //});
+let post = toRefs(props.post);
 
 let errors = ref([]);
 let postTypes = ref([]);
@@ -145,11 +144,11 @@ watch(post, () => {
 
   if (post.title?.trim()) errors.value.push("Заголовок не може бути порожнім");
 
-  if (post?.postFile) errors.value.push("Файл не може бути порожнім");
+  if (post.value?.postFile) errors.value.push("Файл не може бути порожнім");
 
   if (isFilePost.value) return;
 
-  if (post?.dateStart > post.dateEnd)
+  if (post.value?.dateStart > post.dateEnd)
     errors.value.push("Дата початку не може бути після дати кінця");
 
   if (
@@ -179,7 +178,7 @@ const save = () => {
     return;
   }
   if (
-    savePost(post).catch((err) => {
+    savePost(post.value).catch((err) => {
       modalText.value = err;
     })
   ) {

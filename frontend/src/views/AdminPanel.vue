@@ -153,12 +153,12 @@ const closeModal = () => {
 };
 
 const editPost = (post) => {
-  currentPost.value = post;
+  currentPost = post;
   modalWindowIsVisible.value = true;
 };
 
 const openPost = (post) => {
-  currentPost.value = post;
+  currentPost = post;
   postModalIsVisible.value = true;
 };
 

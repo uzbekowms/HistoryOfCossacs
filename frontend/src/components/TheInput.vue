@@ -50,7 +50,7 @@ const props = defineProps({
     type: String,
   },
   modelValue: {
-    type: [String, Number, null],
+    type: [String, Number, null, Object],
   },
   type: {
     type: String,

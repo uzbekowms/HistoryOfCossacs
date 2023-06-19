@@ -1,5 +1,6 @@
 package ua.history.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,4 +40,8 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<PostComment> comments;
+
+    @ManyToMany(mappedBy = "savedPosts")
+    @JsonIgnore
+    private List<User> users;
 }
