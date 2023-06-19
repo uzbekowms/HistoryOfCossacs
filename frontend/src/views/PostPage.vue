@@ -1,7 +1,26 @@
 <template>
   <div class="container">
     <div class="post__container">
+      <video
+        controls
+        class="post__vid"
+        :src="
+          'http://localhost:8000/api/v1/files/' + props.post.previewImagePath
+        "
+        v-if="post.postType.name === 'Відеоматеріали'"
+      ></video
+      ><audio
+        class="post__audio"
+        v-else-if="post.postType.name === 'Аудіоматеріали'"
+        controls
+        :src="
+          'http://localhost:8000/api/v1/files/' + props.post.previewImagePath
+        "
+        alt=""
+        srcset=""
+      ></audio>
       <img
+        v-else
         :src="
           'http://localhost:8000/api/v1/files/' + props.post?.previewImagePath
         "
@@ -21,87 +40,7 @@
           >
         </h2>
         <p class="post__description">
-          {{ props.post?.description }} Lorem, ipsum dolor sit amet consectetur
-          adipisicing elit. Incidunt expedita aspernatur praesentium fugiat modi
-          magni, ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos. Lorem, ipsum dolor
-          sit amet consectetur adipisicing elit. Incidunt expedita aspernatur
-          praesentium fugiat modi magni, ratione iusto quis? Cumque
-          reprehenderit corporis pariatur est aspernatur deserunt ad ipsa ullam
-          sapiente quos. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Incidunt expedita aspernatur praesentium fugiat modi magni,
-          ratione iusto quis? Cumque reprehenderit corporis pariatur est
-          aspernatur deserunt ad ipsa ullam sapiente quos.
+          {{ props.post?.description }}
         </p>
         <div class="post__comments"></div>
       </div>
@@ -132,12 +71,16 @@ const emit = defineEmits(["closeModal"]);
   background-color: #1a1515;
   overflow: auto;
 }
-.post__img {
+.post__vid {
+  width: 100%;
+  margin: 0 auto;
+}
+.post__img,
+.post__vid {
   width: 100%;
   height: 40vh;
   object-fit: cover;
 }
-
 .post__body {
   display: flex;
   flex-direction: column;

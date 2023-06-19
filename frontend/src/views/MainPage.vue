@@ -10,17 +10,22 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import PostViewer from "../components/PostViewer.vue";
 import TheChat from "@/components/TheChat.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import PostPage from "./PostPage.vue";
 
 let modalIsVisible = ref(false);
-let currentPost = ref();
+let currentPost = reactive({
+  postType: { name: null },
+  dateEnd: null,
+  description: null,
+  title: null,
+});
 
 function selectPost(post) {
-  currentPost.value = post;
+  currentPost = post;
   modalIsVisible.value = true;
 }
 

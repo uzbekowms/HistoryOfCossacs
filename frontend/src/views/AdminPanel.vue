@@ -89,10 +89,7 @@
       </div>
     </div>
   </div>
-  <ModalWindow
-    v-show="modalWindowIsVisible"
-    @click="modalWindowIsVisible = false"
-  >
+  <ModalWindow v-show="modalWindowIsVisible" @click="closeModal">
     <AddPost @closeModal="closeModal" @click.stop="" :post="currentPost" />
   </ModalWindow>
   <ModalWindow
@@ -141,8 +138,9 @@ let filteredPosts = ref([]);
 let deleteModalIsVisible = ref(false);
 let currentPostId = ref();
 let postModalIsVisible = ref(false);
+
 let currentPost = reactive({
-  postType: null,
+  postType: { name: null },
   dateEnd: null,
   description: null,
   title: null,
@@ -150,6 +148,14 @@ let currentPost = reactive({
 
 const closeModal = () => {
   modalWindowIsVisible.value = false;
+  console.log("close modal window");
+
+  currentPost = reactive({
+    postType: { name: null },
+    dateEnd: null,
+    description: null,
+    title: null,
+  });
 };
 
 const editPost = (post) => {
