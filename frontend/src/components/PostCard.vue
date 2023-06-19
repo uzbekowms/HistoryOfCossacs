@@ -1,6 +1,18 @@
 <template>
   <div class="post-card__container">
     <img
+      v-if="post.postType.name === 'Аудіоматеріали'"
+      src="../assets/ico/admin/icons/audio/audioWave.png"
+      alt=""
+      srcset=""
+    />
+    <video
+      class="post-card__vid"
+      :src="'http://localhost:8000/api/v1/files/' + props.post.previewImagePath"
+      v-else-if="post.postType.name === 'Відеоматеріали'"
+    ></video>
+    <img
+      v-else
       :src="'http://localhost:8000/api/v1/files/' + props.post.previewImagePath"
       alt="Post card Image"
       class="post-card__img"
@@ -106,7 +118,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, onMounted } from "vue";
 import { formatDate } from "@/utills/formatter.js";
 
 const props = defineProps({
@@ -114,6 +126,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["destroy", "edit"]);
+
+onMounted(() => {});
 </script>
 
 <style scoped>
@@ -128,12 +142,12 @@ const emit = defineEmits(["destroy", "edit"]);
   cursor: pointer;
 }
 
-.post-card__img {
+.post-card__img,
+.post-card__vid {
   object-fit: cover;
   width: 20%;
   aspect-ratio: 1 / 1;
 }
-
 .post-card__text {
   text-align: start;
   padding: 1rem;
@@ -171,7 +185,6 @@ const emit = defineEmits(["destroy", "edit"]);
 .post-card__buttons button:hover svg * {
   stroke: white;
 }
-
 .post-card__title-year {
   font-size: 0.7em;
 }

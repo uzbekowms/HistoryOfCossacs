@@ -3,19 +3,25 @@
     <form class="form">
       <h2 class="add-post__title">Додати пост</h2>
       <audio
+        controls
+        v-show="filePreview"
         :src="filePreview"
-        v-if="post.postType === 'Аудіоматеріали'"
+        v-if="newPost.post.postType.name === 'Аудіоматеріали'"
+        class="add-post__audio"
       ></audio>
       <video
+        controls
         :src="filePreview"
-        v-else-if="post.postType === 'Відеоматеріали'"
+        v-else-if="newPost.post.postType.name === 'Відеоматеріали'"
         v-show="filePreview"
       ></video>
       <img
         v-else
-        :src="filePreview"
+        :src="
+          'http://localhost:8000/api/v1/files/' + newPost?.post.previewImagePath
+        "
+        v-show="newPost?.post.previewImagePath"
         alt="Post img"
-        v-show="filePreview"
         class="add-post__image"
       />
       <fieldset class="add-post__inputs">
@@ -31,12 +37,12 @@
         <TheInput
           title="Заголовок поста"
           id="post_title"
-          v-model="post.title"
+          v-model="newPost.post.title"
         />
         <TheInput
           title="Тип поста"
           id="post_type"
-          v-model="post.postType"
+          v-model="newPost.post.postType.name"
           type="select"
           :options="postTypes"
         />
@@ -44,21 +50,21 @@
           title="Дата початку"
           id="post_date-start"
           type="date"
-          v-model="post.dateStart"
+          v-model="newPost.post.dateStart"
           v-show="!isFilePost"
         />
         <TheInput
           title="Дата кінця"
           id="post_date-end"
           type="date"
-          v-model="post.dateEnd"
+          v-model="newPost.post.dateEnd"
           v-show="!isFilePost"
         />
       </fieldset>
 
       <h3 class="add-post__title" v-show="!isFilePost">Текст поста</h3>
       <textarea
-        v-model="post.description"
+        v-model="newPost.post.description"
         name=""
         id=""
         cols="30"
@@ -97,7 +103,7 @@
 </template>
 
 <script setup>
-import { ref, watch, reactive, onMounted, defineProps } from "vue";
+import { ref, watch, onMounted, defineProps, reactive } from "vue";
 import ModalWindow from "./ModalWindow.vue";
 import TheInput from "@/components/TheInput.vue";
 import { savePost, getPostTypes, saveFile } from "@/utills/api.js";
@@ -106,16 +112,7 @@ const props = defineProps({
   post: Object,
 });
 
-let post = reactive(props.post);
-
-//let post = reactive({
-//  postFile: ref(),
-//  title: ref(""),
-//  dateStart: ref(null),
-//  dateEnd: ref(null),
-//  description: ref(""),
-//  postType: ref(),
-//});
+let newPost = reactive(props);
 
 let errors = ref([]);
 let postTypes = ref([]);
@@ -134,43 +131,45 @@ onMounted(() => {
   getPostTypes().then((response) => (postTypes.value = response));
 });
 
-watch(post, () => {
-  isFilePost.value =
-    post.postType === "Аудіоматеріали" ||
-    post.postType === "Відеоматеріали" ||
-    post.postType === "Галерея";
-  console.log(isFilePost);
-  fileType.value = fileTypes[post.postType] || "image/*";
+watch(newPost, () => {
+  console.log(newPost.post.postType);
+  isFilePost =
+    newPost.post.postType.name === "Аудіоматеріали" ||
+    newPost.post.postType.name === "Відеоматеріали" ||
+    newPost.post.postType.name === "Галерея";
+  fileType = fileTypes[newPost.post.postType.name] || "image/*";
   errors.value = [];
 
-  if (post.title?.trim()) errors.value.push("Заголовок не може бути порожнім");
+  if (!newPost.post.title?.trim())
+    errors.value.push("Заголовок не може бути порожнім");
 
-  if (post?.postFile) errors.value.push("Файл не може бути порожнім");
+  if (!(newPost.post.previewImagePath || newPost.post.postFile))
+    errors.value.push("Файл не може бути порожнім");
 
-  if (isFilePost.value) return;
+  if (!isFilePost.value) return;
 
-  if (post?.dateStart > post.dateEnd)
+  if (newPost?.value.dateStart > newPost.post.dateEnd)
     errors.value.push("Дата початку не може бути після дати кінця");
 
   if (
-    new Date(post.dateEnd) > new Date() ||
-    new Date(post.dateStart) > new Date()
+    new Date(newPost.post.dateEnd) > new Date() ||
+    new Date(newPost.post.dateStart) > new Date()
   )
     errors.value.push("Не можна ставити майбутню дату");
 
-  if (post.description?.trim())
+  if (!newPost.value.description?.trim())
     errors.value.push("Стаття не може бути порожньою");
 });
 
 const handleImageChange = async (event) => {
-  post.postFile = event.target.files[0];
-  post.pathToFile = await saveFile(post.postFile);
-  if (post.postFile) {
+  newPost.post.postFile = event.target.files[0];
+  newPost.post.pathToFile = await saveFile(newPost.post.postFile);
+  if (newPost.post.postFile) {
     const reader = new FileReader();
     reader.onload = () => {
       filePreview.value = reader.result;
     };
-    reader.readAsDataURL(post.postFile);
+    reader.readAsDataURL(newPost.post.postFile);
   }
 };
 
@@ -178,8 +177,12 @@ const save = () => {
   if (errors.value.length) {
     return;
   }
+  newPost.post.postType = newPost.post.postType.name;
+  if (newPost.post.description == null) {
+    newPost.post.description = "опис публікації";
+  }
   if (
-    savePost(post).catch((err) => {
+    savePost(newPost.post).catch((err) => {
       modalText.value = err;
     })
   ) {
@@ -206,6 +209,10 @@ const save = () => {
 .add-post__title {
   font-size: 2rem;
   font-weight: 600;
+}
+.add-post__audio {
+  width: 100%;
+  margin: 0 auto;
 }
 .add-post__inputs {
   margin-top: 1rem;
