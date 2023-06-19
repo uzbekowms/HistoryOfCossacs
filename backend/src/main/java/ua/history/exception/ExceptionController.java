@@ -30,6 +30,11 @@ public class ExceptionController {
         for (FieldError error : fieldErrors) {
             errors.add(error.getDefaultMessage());
         }
-        return ResponseEntity.ok(errors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<List<String>> handleUserAlreadyExists(UserAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(e.getMessage()));
     }
 }
