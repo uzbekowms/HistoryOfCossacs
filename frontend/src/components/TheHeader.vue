@@ -70,12 +70,25 @@
         </svg>
         <nav v-if="profileVisible" class="menu__dropdown dropdown__right">
           <ul class="menu__ul">
-            <li class="menu__li"><a href="">Мій профіль</a></li>
-            <li class="menu__li">
+            <li class="menu__li" v-if="isLogged()">
+              <a href="">Мій профіль</a>
+            </li>
+            <li class="menu__li" v-if="!isLogged()">
               <router-link to="/login">Увійти в акаунт</router-link>
             </li>
-            <li class="menu__li">
-              <a href="">Вийти з акаунта</a>
+            <li class="menu__li" v-if="isLogged()">
+              <a href="">Обране</a>
+            </li>
+            <li class="menu__li" v-if="isLogged()">
+              <a href="" @click.prevent="logout">Вийти з акаунта</a>
+            </li>
+            <li
+              class="menu__li"
+              v-if="isLogged() && currentUser?.role === 'ROLE_ADMIN'"
+            >
+              <a href="" @click.prevent="router.push('/admin')"
+                >Вийти з акаунта</a
+              >
             </li>
           </ul>
         </nav>
@@ -84,23 +97,26 @@
   </header>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { getPostTypes } from "@/utills/api.js";
+import { isLogged, clearUser, currentUser } from "@/utills/account";
 
-export default {
-  setup() {
-    let menuVisible = ref(false);
-    let profileVisible = ref(false);
-    let postTypes = ref([]);
+let menuVisible = ref(false);
+let profileVisible = ref(false);
+let postTypes = ref([]);
 
-    onMounted(async () => {
-      postTypes.value = await getPostTypes();
-      console.log(postTypes);
-    });
+const router = useRouter();
 
-    return { menuVisible, profileVisible, postTypes };
-  },
+onMounted(async () => {
+  postTypes.value = await getPostTypes();
+  console.log(postTypes);
+});
+
+const logout = () => {
+  clearUser();
+  router.push("/");
 };
 </script>
 

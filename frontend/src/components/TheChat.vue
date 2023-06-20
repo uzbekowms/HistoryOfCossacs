@@ -87,6 +87,7 @@ import { ref, defineComponent, onMounted } from "vue";
 import TheMessage from "./TheMessage.vue";
 import { sendMessage, messages } from "@/utills/ws.js";
 import { getAllMessages } from "@/utills/api";
+import { isLogged, currentUser } from "@/utills/account.js";
 
 defineComponent(TheMessage);
 let isChatVisible = ref(false);
@@ -96,8 +97,7 @@ function sendMessages() {
   if (chatText.value.trim() === "") return;
   let message = {
     sender: {
-      id: 4,
-      nickname: "Admin",
+      id: currentUser?.id,
     },
     message: chatText.value.trim(),
     timestamp: new Date(),
@@ -105,11 +105,6 @@ function sendMessages() {
   sendMessage(message);
   chatText.value = "";
 }
-
-const isLogged = () => {
-  return localStorage.getItem("user");
-};
-
 onMounted(async () => {
   await getAllMessages().then((response) => (messages.value = response));
 });

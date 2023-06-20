@@ -178,9 +178,6 @@ const save = () => {
     return;
   }
   newPost.post.postType = newPost.post.postType.name;
-  if (newPost.post.description == null) {
-    newPost.post.description = "опис публікації";
-  }
   if (
     savePost(newPost.post).catch((err) => {
       modalText.value = err;

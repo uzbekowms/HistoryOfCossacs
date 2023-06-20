@@ -1,5 +1,8 @@
 <template>
-  <div class="message__container" :class="{ message__owner: props.isOwner }">
+  <div
+    class="message__container"
+    :class="{ message__owner: currentUser.id === props.message.sender.id }"
+  >
     <svg
       class="message__avatar"
       fill="#000000"
@@ -54,9 +57,9 @@
 <script setup>
 import { defineProps, onMounted } from "vue";
 import { formatTime } from "@/utills/formatter.js";
+import { currentUser } from "@/utills/account";
 
 const props = defineProps({
-  isOwner: Boolean,
   message: {
     type: Object,
     required: true,
@@ -66,8 +69,6 @@ const props = defineProps({
 onMounted(() => {
   document.querySelector(".chat__wrapper").scrollTop = 0;
 });
-
-console.log(props.isOwner);
 </script>
 
 <style scoped>

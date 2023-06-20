@@ -29,6 +29,7 @@ public class UserFactory {
                 .id(save.getId())
                 .email(save.getEmail())
                 .nickname(save.getNickname())
+                .role(save.getRole())
                 .profilePicturePath(save.getProfilePicturePath())
                 .build();
     }

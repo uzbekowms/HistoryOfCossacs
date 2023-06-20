@@ -3,6 +3,7 @@ import MainPage from "@/views/MainPage.vue";
 import SignupPage from "@/views/SignupPage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import AdminPanel from "@/views/AdminPanel.vue";
+import ErrorPage from "@/views/ErrorPage.vue";
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
     meta: {
       hideHeader: true,
     },
+  },
+  {
+    path: "/error",
+    component: ErrorPage,
   },
   {
     path: "/admin",

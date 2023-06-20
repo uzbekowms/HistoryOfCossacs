@@ -23,7 +23,7 @@ public class Post {
 
     private String title;
 
-    @Column(columnDefinition = "TEXT NOT NULL")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "preview_image_path")
