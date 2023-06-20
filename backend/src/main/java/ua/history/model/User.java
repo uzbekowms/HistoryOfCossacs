@@ -36,4 +36,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     @JsonIgnore
     private List<Post> savedPosts;
+
+    private String role;
 }

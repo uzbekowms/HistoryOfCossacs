@@ -26,11 +26,9 @@ public class UserService {
     }
 
     public UserDTO login(AuthDTO authDTO) {
-        User user = userRepository
-                .findByEmailAndPassword(authDTO.getEmail(),
-                        passwordEncoder.encode(authDTO.getPassword()))
-                .orElseThrow(() -> new EntityNotFoundException("Неправильний логін або пароль"));
-
+        User user = userRepository.findByEmail(authDTO.getEmail()).orElseThrow(() -> new EntityNotFoundException("Неправильний логін або пароль"));
+        if (!passwordEncoder.matches(authDTO.getPassword(), user.getPassword()))
+            throw new EntityNotFoundException("Неправильний логін або пароль");
         return userFactory.toDto(user);
     }
 

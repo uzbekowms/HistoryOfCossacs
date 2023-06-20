@@ -19,6 +19,7 @@ public class UserFactory {
                 .nickname(registerDTO.getNickname())
                 .email(registerDTO.getEmail())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
+                .role("ROLE_USER")
                 .build();
     }
 
