@@ -48,6 +48,12 @@ const signup = async (user) => {
     .then((response) => response.data);
 };
 
+const getAllMessages = async () => {
+  return await axios
+    .get(`${API_URL}/messages`)
+    .then((response) => response.data);
+};
+
 export {
   getPostTypes,
   savePost,
@@ -56,4 +62,5 @@ export {
   saveFile,
   login,
   signup,
+  getAllMessages,
 };

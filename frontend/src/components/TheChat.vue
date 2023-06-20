@@ -51,8 +51,9 @@
         @keyup.enter="sendMessages"
         type="text"
         class="chat__input-field"
-        placeholder="Пишіть..."
+        :placeholder="isLogged() ? 'Пишіть...' : 'Увійдіть або зареєструйтесь'"
         v-model="chatText"
+        :disabled="!isLogged()"
       />
       <svg
         @click="sendMessages"
@@ -82,9 +83,10 @@
 </template>
 
 <script setup>
-import { ref, defineComponent } from "vue";
+import { ref, defineComponent, onMounted } from "vue";
 import TheMessage from "./TheMessage.vue";
 import { sendMessage, messages } from "@/utills/ws.js";
+import { getAllMessages } from "@/utills/api";
 
 defineComponent(TheMessage);
 let isChatVisible = ref(false);
@@ -103,6 +105,14 @@ function sendMessages() {
   sendMessage(message);
   chatText.value = "";
 }
+
+const isLogged = () => {
+  return localStorage.getItem("user");
+};
+
+onMounted(async () => {
+  await getAllMessages().then((response) => (messages.value = response));
+});
 </script>
 
 <style scoped>
