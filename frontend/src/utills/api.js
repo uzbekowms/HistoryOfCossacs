@@ -36,4 +36,24 @@ const saveFile = async (file) => {
   }).then((response) => response.data);
 };
 
-export { getPostTypes, savePost, getPosts, deletePost, saveFile };
+const login = async (user) => {
+  return await axios
+    .post(`${API_URL}/auth/login`, user)
+    .then((response) => response.data);
+};
+
+const signup = async (user) => {
+  return await axios
+    .post(`${API_URL}/auth/signup`, user)
+    .then((response) => response.data);
+};
+
+export {
+  getPostTypes,
+  savePost,
+  getPosts,
+  deletePost,
+  saveFile,
+  login,
+  signup,
+};

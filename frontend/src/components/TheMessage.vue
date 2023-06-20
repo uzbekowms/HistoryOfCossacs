@@ -38,16 +38,22 @@
       </g>
     </svg>
     <div class="message__text">
-      <h3 class="message__user-nickname">{{ props.message?.user }}</h3>
+      <h3 class="message__user-nickname">
+        {{ props.message?.sender.nickname }}
+      </h3>
       <p class="message__user-message">
         {{ props.message?.message }}
       </p>
+      <span class="message__time">{{
+        formatTime(props.message?.timestamp)
+      }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps, onMounted } from "vue";
+import { formatTime } from "@/utills/formatter.js";
 
 const props = defineProps({
   isOwner: Boolean,
@@ -59,13 +65,17 @@ const props = defineProps({
 
 onMounted(() => {
   document.querySelector(".chat__wrapper").scrollTop = 0;
-
-})
+});
 
 console.log(props.isOwner);
 </script>
 
 <style scoped>
+.message__time {
+  width: 100%;
+  text-align: right;
+  font-size: 0.8rem;
+}
 .message__container {
   display: flex;
   align-items: end;

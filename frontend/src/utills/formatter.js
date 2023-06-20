@@ -7,4 +7,13 @@ const formatDate = (date) => {
   return customFormattedDate;
 };
 
-export { formatDate };
+const formatTime = (date) => {
+  if (!date) return "";
+
+  date = new Date(date);
+  const options = { hour: "numeric", minute: "numeric" };
+  const formattedTime = date.toLocaleString("uk-UA", options);
+  return formattedTime;
+};
+
+export { formatDate, formatTime };

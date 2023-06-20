@@ -48,14 +48,14 @@
     </div>
     <div class="chat__input">
       <input
-        @keyup.enter="sendMessage"
+        @keyup.enter="sendMessages"
         type="text"
         class="chat__input-field"
         placeholder="Пишіть..."
         v-model="chatText"
       />
       <svg
-        @click="sendMessage"
+        @click="sendMessages"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -84,20 +84,23 @@
 <script setup>
 import { ref, defineComponent } from "vue";
 import TheMessage from "./TheMessage.vue";
+import { sendMessage, messages } from "@/utills/ws.js";
 
 defineComponent(TheMessage);
 let isChatVisible = ref(false);
 let chatText = ref("");
-let messages = ref([]);
 
-function sendMessage() {
+function sendMessages() {
   if (chatText.value.trim() === "") return;
-  messages.value = [
-    {
-      user: "Test",
-      message: chatText.value.trim(),
+  let message = {
+    sender: {
+      id: 4,
+      nickname: "Admin",
     },
-  ].concat(messages.value);
+    message: chatText.value.trim(),
+    timestamp: new Date(),
+  };
+  sendMessage(message);
   chatText.value = "";
 }
 </script>

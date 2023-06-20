@@ -103,11 +103,7 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD
-import { ref, watch, onMounted, defineProps, toRefs } from "vue";
-=======
 import { ref, watch, onMounted, defineProps, reactive } from "vue";
->>>>>>> bff722349e6d863e231592c400450bc05808097b
 import ModalWindow from "./ModalWindow.vue";
 import TheInput from "@/components/TheInput.vue";
 import { savePost, getPostTypes, saveFile } from "@/utills/api.js";
@@ -116,19 +112,7 @@ const props = defineProps({
   post: Object,
 });
 
-<<<<<<< HEAD
-//let post = reactive({
-//  postFile: null,
-//  title: "",
-//  dateStart: null,
-//  dateEnd: null,
-//  description: "",
-//  postType: "",
-//});
-let post = toRefs(props.post);
-=======
 let newPost = reactive(props);
->>>>>>> bff722349e6d863e231592c400450bc05808097b
 
 let errors = ref([]);
 let postTypes = ref([]);
@@ -159,20 +143,12 @@ watch(newPost, () => {
   if (!newPost.post.title?.trim())
     errors.value.push("Заголовок не може бути порожнім");
 
-<<<<<<< HEAD
-  if (post.value?.postFile) errors.value.push("Файл не може бути порожнім");
-=======
   if (!(newPost.post.previewImagePath || newPost.post.postFile))
     errors.value.push("Файл не може бути порожнім");
->>>>>>> bff722349e6d863e231592c400450bc05808097b
 
   if (!isFilePost.value) return;
 
-<<<<<<< HEAD
-  if (post.value?.dateStart > post.dateEnd)
-=======
   if (newPost?.value.dateStart > newPost.post.dateEnd)
->>>>>>> bff722349e6d863e231592c400450bc05808097b
     errors.value.push("Дата початку не може бути після дати кінця");
 
   if (
@@ -206,11 +182,7 @@ const save = () => {
     newPost.post.description = "опис публікації";
   }
   if (
-<<<<<<< HEAD
-    savePost(post.value).catch((err) => {
-=======
     savePost(newPost.post).catch((err) => {
->>>>>>> bff722349e6d863e231592c400450bc05808097b
       modalText.value = err;
     })
   ) {
