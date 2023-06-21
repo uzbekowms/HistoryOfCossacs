@@ -40,7 +40,7 @@ public class Post {
     private Date dateEnd;
 
     @OneToMany(mappedBy = "post")
-    @JsonIgnoreProperties("post")
+    @JsonIgnoreProperties({"post", "savedPosts"})
     private List<PostComment> comments;
 
     @ManyToMany(mappedBy = "savedPosts")
