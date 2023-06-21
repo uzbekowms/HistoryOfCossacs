@@ -30,10 +30,15 @@
       capture
       lang="uk"
       :max="new Date()"
+      :style="{ zIndex: '2' }"
     />
-    <label v-if="props.title" :for="props.id" class="input__title">{{
-      props.title
-    }}</label>
+    <label
+      v-if="props.title"
+      :for="props.id"
+      :style="{ zIndex: '1' }"
+      class="input__title"
+      >{{ props.title }}</label
+    >
   </div>
 </template>
 

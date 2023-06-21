@@ -23,11 +23,17 @@
               :key="postType.id"
               class="menu__li"
             >
-              {{ postType }}
+              <router-link
+                :to="{ name: 'PostsByType', params: { type: postType } }"
+                >{{ postType }}</router-link
+              >
             </li>
           </ul>
         </nav>
       </button>
+      <router-link :to="{ name: 'HomePage' }" class="post_type__title"
+        >Історія козацтва</router-link
+      >
       <button
         class="profile_button menu__button"
         @click="profileVisible = !profileVisible"
@@ -131,7 +137,13 @@ header {
   background-color: #130e0e;
   z-index: 3;
 }
-
+.post_type__title {
+  font-family: "Inter" serif;
+  font-size: 2rem;
+  padding: 0.8em;
+  z-index: 2;
+  font-weight: 600;
+}
 .profile_button .dropdown__right {
   right: 0;
   left: auto;

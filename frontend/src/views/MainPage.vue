@@ -1,7 +1,6 @@
 <template>
   <main class="main_content">
-    <h1 class="post_type__title">Історія козацтва</h1>
-    <PostViewer @select-post="selectPost" />
+    <PostViewer @selectPost="selectPost" />
     <TheChat />
     <ModalWindow v-show="modalIsVisible" @click="modalIsVisible = false">
       <PostPage :post="currentPost" @click.stop="" @close-modal="closeModal" />
@@ -35,14 +34,6 @@ function closeModal() {
 </script>
 
 <style scoped>
-.post_type__title {
-  font-family: "Inter" serif;
-  font-size: 3rem;
-  transform: translateY(3vh);
-  padding: 0.8em;
-  z-index: 2;
-  font-weight: 600;
-}
 .main_content {
   display: flex;
   flex-direction: column;
