@@ -1,6 +1,7 @@
 package ua.history.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +40,7 @@ public class Post {
     private Date dateEnd;
 
     @OneToMany(mappedBy = "post")
+    @JsonIgnoreProperties("post")
     private List<PostComment> comments;
 
     @ManyToMany(mappedBy = "savedPosts")
