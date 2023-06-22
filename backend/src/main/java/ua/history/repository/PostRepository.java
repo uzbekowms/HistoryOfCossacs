@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.history.model.Post;
+import ua.history.model.PostType;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("select p from Post p where p.postType = :category")
-    List<Post> findAll(String category, Sort sort);
+    List<Post> findAll(PostType category, Sort sort);
 }
