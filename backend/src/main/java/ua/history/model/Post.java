@@ -39,7 +39,7 @@ public class Post {
     @Column(name = "date_end")
     private Date dateEnd;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post")
     @JsonIgnoreProperties("post")
     @ToString.Exclude
     private List<PostComment> comments;
