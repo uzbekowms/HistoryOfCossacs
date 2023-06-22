@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ public class PostComment {
     private User owner;
 
     private String comment;
-    private Date timestamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime timestamp;
 
 }

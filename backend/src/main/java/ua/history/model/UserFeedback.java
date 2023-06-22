@@ -1,13 +1,21 @@
 package ua.history.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "user_feedbacks")
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class UserFeedback {
 
     @Id
@@ -20,6 +28,8 @@ public class UserFeedback {
 
     private String message;
 
-    @Column(name = "date_of_feedback")
-    private Date dateOfFeedback;
+    @Column(name = "date_of_feedback", columnDefinition = "")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime dateOfFeedback;
+
 }

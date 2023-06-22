@@ -2,11 +2,14 @@ package ua.history.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ua.history.model.Post;
 import ua.history.model.User;
 import ua.history.repository.PostRepository;
 import ua.history.repository.UserRepository;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +39,13 @@ public class FavoritesService {
         user.getSavedPosts().removeIf(postToRemove -> postToRemove.getId() == postId);
         userRepository.save(user);
         return "Успішно видалено з обраних";
+    }
+
+    public List<Post> findAll(int id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Неможливо знайти користувача з ідентифікатором: " + id)
+        );
+
+        return user.getSavedPosts();
     }
 }
