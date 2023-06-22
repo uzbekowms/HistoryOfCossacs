@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.history.dto.PostRequest;
 import ua.history.factory.PostFactory;
 import ua.history.model.Post;
+import ua.history.model.PostType;
 import ua.history.repository.PostRepository;
 
 import java.util.HashMap;
@@ -59,7 +60,7 @@ public class PostService {
         return true;
     }
 
-    public List<Post> findAll(String category) {
+    public List<Post> findAll(PostType category) {
         return postRepository.findAll(category, Sort.by(Sort.Direction.ASC, "dateStart"));
     }
 }

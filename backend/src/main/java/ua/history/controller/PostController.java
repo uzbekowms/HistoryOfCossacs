@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.history.dto.PostRequest;
 import ua.history.model.Post;
+import ua.history.model.PostType;
 import ua.history.service.PostService;
 
 import java.io.InputStream;
@@ -34,8 +35,8 @@ public class PostController {
     public ResponseEntity<List<Post>> getAllPosts() {
         return ResponseEntity.ok(postService.getAll());
     }
-    @GetMapping("/{category}")
-    public ResponseEntity<List<Post>> getAllPostsByCategory(@PathVariable String category) {
+    @GetMapping
+    public ResponseEntity<List<Post>> getAllPostsByCategory(@RequestParam("category") PostType category) {
         return ResponseEntity.ok(postService.findAll(category));
     }
 
