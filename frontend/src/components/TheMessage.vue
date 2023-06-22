@@ -1,7 +1,7 @@
 <template>
   <div
     class="message__container"
-    :class="{ message__owner: currentUser.id === props.message.sender.id }"
+    :class="{ message__owner: user?.id === props.message.sender.id }"
   >
     <svg
       class="message__avatar"
@@ -57,7 +57,8 @@
 <script setup>
 import { defineProps, onMounted } from "vue";
 import { formatTime } from "@/utills/formatter.js";
-import { currentUser } from "@/utills/account";
+import profileApi from "@/utills/profile";
+const { user, getUserByID } = profileApi();
 
 const props = defineProps({
   message: {
@@ -66,8 +67,13 @@ const props = defineProps({
   },
 });
 
-onMounted(() => {
-  document.querySelector(".chat__wrapper").scrollTop = 0;
+onMounted(async () => {
+  try {
+    document.querySelector(".chat__wrapper").scrollTop = 0;
+  } catch (err) {
+    console.log(err);
+  }
+  await getUserByID();
 });
 </script>
 

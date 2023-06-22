@@ -2,10 +2,25 @@
   <div class="card_wrapper">
     <div class="post_card">
       <img
+        v-if="post.postType.name === 'Аудіоматеріали'"
+        src="../assets/ico/admin/icons/audio/audioWave.png"
+        alt=""
+        srcset=""
+        class="post_card__img"
+      />
+      <video
+        class="post_card__img"
         :src="
-          'http://localhost:8000/api/v1/files/' + props.post?.previewImagePath
+          'http://localhost:8000/api/v1/files/' + props.post.previewImagePath
         "
-        alt="Post Image"
+        v-else-if="post.postType.name === 'Відеоматеріали'"
+      ></video>
+      <img
+        v-else
+        :src="
+          'http://localhost:8000/api/v1/files/' + props.post.previewImagePath
+        "
+        alt="Post card Image"
         class="post_card__img"
       />
       <div class="post_card__text-wrapper">

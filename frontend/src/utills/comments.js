@@ -8,6 +8,7 @@ export default function commentsApi() {
         data
       );
       console.log(response);
+      return response.data;
     } catch (err) {
       console.log(err);
     }

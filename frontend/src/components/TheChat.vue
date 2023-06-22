@@ -87,7 +87,7 @@ import { ref, defineComponent, onMounted } from "vue";
 import TheMessage from "./TheMessage.vue";
 import { sendMessage, messages } from "@/utills/ws.js";
 import { getAllMessages } from "@/utills/api";
-import { isLogged, currentUser } from "@/utills/account.js";
+import { isLogged } from "@/utills/account.js";
 
 defineComponent(TheMessage);
 let isChatVisible = ref(false);
@@ -97,7 +97,7 @@ function sendMessages() {
   if (chatText.value.trim() === "") return;
   let message = {
     sender: {
-      id: currentUser?.id,
+      id: localStorage.getItem("userId"),
     },
     message: chatText.value.trim(),
     timestamp: new Date(),

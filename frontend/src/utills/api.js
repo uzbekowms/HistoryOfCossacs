@@ -10,6 +10,12 @@ const getPosts = async () => {
   return await axios(`${API_URL}/posts`).then((response) => response.data);
 };
 
+const getPostsByType = async (type) => {
+  return await axios(`${API_URL}/posts/category/${type}`).then(
+    (response) => response.data
+  );
+};
+
 const savePost = async (post) => {
   return await axios(`${API_URL}/posts`, {
     method: "POST",
@@ -60,6 +66,7 @@ export {
   getPosts,
   deletePost,
   saveFile,
+  getPostsByType,
   login,
   signup,
   getAllMessages,

@@ -32,7 +32,7 @@
         {{ props.post.description }}
       </p>
     </div>
-    <div class="post-card__buttons">
+    <div v-if="!favorites" class="post-card__buttons">
       <button @click.stop="emit('edit')">
         <svg
           width="64px"
@@ -123,6 +123,7 @@ import { formatDate } from "@/utills/formatter.js";
 
 const props = defineProps({
   post: Object,
+  favorites: Boolean,
 });
 
 const emit = defineEmits(["destroy", "edit"]);

@@ -19,12 +19,15 @@
         <nav v-if="menuVisible" class="menu__dropdown">
           <ul class="menu__ul">
             <li
-              v-for="postType in postTypes"
-              :key="postType.id"
+              v-for="(postType, key) in postTypes"
+              :key="key"
               class="menu__li"
             >
               <router-link
-                :to="{ name: 'PostsByType', params: { type: postType } }"
+                :to="{
+                  name: 'PostsByType',
+                  params: { type_key: key, type: postType },
+                }"
                 >{{ postType }}</router-link
               >
             </li>
@@ -77,23 +80,23 @@
         <nav v-if="profileVisible" class="menu__dropdown dropdown__right">
           <ul class="menu__ul">
             <li class="menu__li" v-if="isLogged()">
-              <a href="">Мій профіль</a>
+              <router-link :to="{ name: 'Profile' }">Мій профіль</router-link>
             </li>
             <li class="menu__li" v-if="!isLogged()">
-              <router-link to="/login">Увійти в акаунт</router-link>
+              <router-link :to="{ name: 'Login' }">Увійти в акаунт</router-link>
             </li>
             <li class="menu__li" v-if="isLogged()">
-              <a href="">Обране</a>
+              <router-link :to="{ name: 'Favorites' }">Обране</router-link>
             </li>
             <li class="menu__li" v-if="isLogged()">
               <a href="" @click.prevent="logout">Вийти з акаунта</a>
             </li>
             <li
               class="menu__li"
-              v-if="isLogged() && currentUser?.role === 'ROLE_ADMIN'"
+              v-if="isLogged() && user?.role === 'ROLE_ADMIN'"
             >
               <a href="" @click.prevent="router.push('/admin')"
-                >Вийти з акаунта</a
+                >Адміністративна панель</a
               >
             </li>
           </ul>
@@ -107,7 +110,10 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { getPostTypes } from "@/utills/api.js";
-import { isLogged, clearUser, currentUser } from "@/utills/account";
+import { isLogged, clearUser } from "@/utills/account";
+
+import profileApi from "@/utills/profile";
+const { user, getUserByID } = profileApi();
 
 let menuVisible = ref(false);
 let profileVisible = ref(false);
@@ -118,6 +124,7 @@ const router = useRouter();
 onMounted(async () => {
   postTypes.value = await getPostTypes();
   console.log(postTypes);
+  await getUserByID();
 });
 
 const logout = () => {
@@ -134,7 +141,7 @@ button {
 }
 
 header {
-  background-color: #130e0e;
+  background-color: #1b1b1b;
   z-index: 3;
 }
 .post_type__title {

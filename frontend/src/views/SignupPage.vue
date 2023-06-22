@@ -22,6 +22,7 @@ import { useRouter } from "vue-router";
 import FormSkeleton from "@/views/FormSkeleton.vue";
 import TheInput from "@/components/TheInput.vue";
 import { signup } from "@/utills/api";
+import { writeUser } from "@/utills/account.js";
 
 const router = useRouter();
 
@@ -38,7 +39,7 @@ const signUp = async () => {
 
   await signup(user)
     .then((response) => {
-      localStorage.setItem("user", JSON.stringify(response));
+      writeUser(response);
       router.push("/");
     })
     .catch((err) => {

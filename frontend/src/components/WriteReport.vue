@@ -11,22 +11,48 @@
       type="text"
       placeholder="Текст звертання"
     ></textarea>
-    <button class="report__send">Надіслати</button>
+    <p class="error_message">{{ errorMessage }}</p>
+    <button @click="tryToWriteFeedback" class="report__send">Надіслати</button>
   </div>
 </template>
 
 <script setup>
-import { defineEmits, reactive } from "vue";
+import { defineEmits, ref, onMounted, reactive } from "vue";
+import feedbackApi from "@/utills/feedbacks";
+
+import profileApi from "@/utills/profile";
+const { user, getUserByID } = profileApi();
+
+const { writeFeedback } = feedbackApi();
+
 const emit = defineEmits(["closeModal"]);
+const errorMessage = ref("");
+
+const tryToWriteFeedback = async () => {
+  if (form.message.length < 10) {
+    errorMessage.value = "Мінімальна кількість символів 10!";
+  } else {
+    errorMessage.value = "";
+    writeFeedback(form);
+  }
+};
 
 const form = reactive({
-  user_id: 3,
+  userId: null,
   message: "",
-  dateOfFeedback: new Date(),
+});
+
+onMounted(async () => {
+  form.userId = await user.id;
+  await getUserByID();
+  form.userId = await localStorage.getItem("userId");
 });
 </script>
 
 <style scoped>
+.error_message {
+  color: rgb(236, 98, 98);
+}
 textarea {
   padding: 5px;
   height: 200px;

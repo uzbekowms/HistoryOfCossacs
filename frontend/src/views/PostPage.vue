@@ -43,8 +43,31 @@
         <p class="post__description">
           {{ props.post?.description }}
         </p>
+        <button
+          class="favorites__button"
+          @click="addPostToFav(user?.id, props.post.id)"
+        >
+          Додати публікацію в обране
+        </button>
+        <p class="comments__title">Коментарі</p>
+
+        <div
+          class="comments__container"
+          v-for="comment in props.post.comments"
+          :key="comment.id"
+        >
+          <div class="comment__info">
+            {{ comment.owner.nickname }} {{ comment.timestamp }}
+          </div>
+          <div class="comment__data">{{ comment.comment }}</div>
+        </div>
         <div class="post__comments">
-          <input v-model="comment" class="" type="text" />
+          <input
+            v-model="comment"
+            placeholder="Ваші думки про прочитане"
+            class=""
+            type="text"
+          />
           <button @click="sendComment(props.post.id)">Надіслати</button>
         </div>
       </div>
@@ -52,12 +75,6 @@
       <div @click="writeReportModal" class="post__report">
         <img class="" src="../assets/ico/report.png" alt="" />
         <p>Знайшли помилку?</p>
-      </div>
-
-      <div>
-        <p v-for="comment in props.post.comments" :key="comment.id">
-          {{ comment }}
-        </p>
       </div>
     </div>
 
@@ -71,14 +88,15 @@
 import ModalWindow from "@/components/ModalWindow.vue";
 import WriteReport from "@/components/WriteReport.vue";
 
+import { isLogged } from "@/utills/account.js";
 import commentsApi from "@/utills/comments.js";
-import { isLogged } from "@/utills/account";
-
+import profileApi from "@/utills/profile.js";
 import { defineProps, defineEmits, ref, reactive, onMounted } from "vue";
 
 import { formatDate } from "@/utills/formatter";
 
 const { writeComment } = commentsApi();
+const { addPostToFav, user, getUserByID } = profileApi();
 
 let modalIsVisible = ref(false);
 
@@ -92,11 +110,10 @@ const props = defineProps({
   post: Object,
 });
 
-const user = ref([]);
-
 onMounted(async () => {
   user.value = await isLogged();
   user.value = JSON.parse(user.value);
+  await getUserByID();
 });
 
 const sendComment = async (postId) => {
@@ -115,6 +132,52 @@ const comment = ref("");
 </script>
 
 <style scoped>
+.favorites__button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  width: fit-content;
+  font-size: 1rem;
+  border-radius: 10px;
+  flex-direction: row;
+  background-color: var(--accent-color);
+  color: white;
+  transition: all 0.3s;
+  border: none;
+}
+.favorites__button:hover {
+  transition: all 0.3s;
+  background-color: #0f7e0f;
+}
+.comments__title {
+  font-size: small;
+  margin-top: 20px;
+  padding: 5px;
+  width: fit-content;
+  border-radius: 5px;
+  background-color: #3a3a3a;
+}
+.comments__container {
+  background-color: #3a3a3a;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+.comment_info {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.comment__data {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
 .container {
   width: 100%;
   height: 90vh;

@@ -20,7 +20,7 @@
 <script setup>
 import { ref, onMounted, watch, defineEmits } from "vue";
 import ThePost from "./ThePost.vue";
-import { getPosts } from "../utills/api.js";
+import { getPosts, getPostsByType } from "../utills/api.js";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -28,9 +28,16 @@ const slider = ref(null);
 let posts = ref([]);
 
 const selectedPostType = ref(route.params.type);
+const selectedPostTypeKey = ref(route.params.type_key);
 
 const updatePostType = async () => {
-  selectedPostType.value = route.params.type;
+  if (route.params.type != null) {
+    selectedPostType.value = route.params.type;
+    selectedPostTypeKey.value = route.params.type_key;
+    posts.value = await getPostsByType(selectedPostTypeKey.value);
+  } else {
+    posts.value = await getPosts();
+  }
 };
 
 onMounted(async () => {
@@ -58,13 +65,13 @@ onMounted(async () => {
 
   posts.value = await getPosts();
 });
-
 watch(
   () => route.params,
-  () => {
-    updatePostType();
+  async () => {
+    await updatePostType();
   }
 );
+
 function handlePostSelect(post) {
   console.log(post);
   emit("selectPost", post);

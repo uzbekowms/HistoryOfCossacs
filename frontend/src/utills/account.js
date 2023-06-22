@@ -3,12 +3,12 @@ import { reactive } from "vue";
 let currentUser = reactive();
 
 const isLogged = () => {
-  return localStorage.getItem("user");
+  return localStorage.getItem("userId");
 };
 
 const writeUser = (user) => {
   currentUser = user;
-  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("userId", user.id);
 };
 
 const clearUser = () => {

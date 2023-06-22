@@ -38,6 +38,9 @@
             </svg>
           </button>
         </div>
+        <router-link :to="{ name: 'UsersFeedbacks' }"
+          >Користувацькі відгуки</router-link
+        >
         <button
           class="search__add-button"
           @click="

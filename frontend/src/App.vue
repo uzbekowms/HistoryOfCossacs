@@ -12,7 +12,7 @@ import TheHeader from "@/components/TheHeader.vue";
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  --accent-color: #3baf2a;
+  --accent-color: #17bd49;
   --error-color: #f10808;
 }
 
@@ -21,8 +21,8 @@ import TheHeader from "@/components/TheHeader.vue";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: white;
-  background-color: #1a1515;
+  color: rgb(230, 230, 230);
+  background-color: #313131;
 }
 
 html {
