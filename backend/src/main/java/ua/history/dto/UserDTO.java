@@ -12,13 +12,9 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
 
     private int id;
-
     private String nickname;
-
     private String email;
-
     private String password;
-
     private String profilePicturePath;
     private String role;
 }

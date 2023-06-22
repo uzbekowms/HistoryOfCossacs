@@ -39,4 +39,17 @@ public class UserService {
         User userToSave = userFactory.fromDto(registerDTO);
         return userFactory.toDto(userRepository.save(userToSave));
     }
+
+    public User update(UserDTO user, int id) {
+        User userFromDb = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Не вдалось знайти користувача з ідентифікатором: " + id));
+
+        userFromDb.setEmail(user.getEmail());
+        userFromDb.setRole(user.getRole());
+        userFromDb.setNickname(user.getNickname());
+        userFromDb.setEmail(user.getEmail());
+        userFromDb.setPassword(user.getPassword() != null ? passwordEncoder.encode(user.getPassword()) : userFromDb.getPassword());
+
+        return userRepository.save(userFromDb);
+    }
 }
