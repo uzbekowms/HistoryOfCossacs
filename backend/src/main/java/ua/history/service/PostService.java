@@ -38,12 +38,8 @@ public class PostService {
 
     public Post save(PostRequest post) {
         Post postToSave = PostFactory.fromDto(post);
-        String fileType = fileTypes.getOrDefault(postToSave.getPostType().getName(), ".png");
-        //String filename = resourceService.writeFile(post.getPostFile());
-        //postToSave.setPreviewImagePath(filename);
         return postRepository.save(postToSave);
     }
-
 
 
     public Post update(int id, PostRequest post) {
@@ -51,7 +47,6 @@ public class PostService {
             throw new EntityNotFoundException("Cannot update post. Post not found");
 
         Post postToSave = PostFactory.fromDto(post);
-        //resourceService.updateFile(post.getPostFile(), postToSave.getPreviewImagePath());
 
         return postRepository.save(postToSave);
     }
@@ -62,5 +57,9 @@ public class PostService {
 
         postRepository.deleteById(id);
         return true;
+    }
+
+    public List<Post> findAll(String category) {
+        return postRepository.findAll(category, Sort.by(Sort.Direction.ASC, "dateStart"));
     }
 }

@@ -3,6 +3,7 @@ package ua.history.controller;
 import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.FormDataParam;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,10 @@ public class PostController {
     @GetMapping
     public ResponseEntity<List<Post>> getAllPosts() {
         return ResponseEntity.ok(postService.getAll());
+    }
+    @GetMapping("/{category}")
+    public ResponseEntity<List<Post>> getAllPostsByCategory(@PathVariable String category) {
+        return ResponseEntity.ok(postService.findAll(category));
     }
 
     /* @PostMapping()
