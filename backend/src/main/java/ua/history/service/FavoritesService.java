@@ -31,7 +31,7 @@ public class FavoritesService {
     public String delete(int userId, int postId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Неможливо знайти користувача з ідентифікатором: " + id));
+                        new EntityNotFoundException("Неможливо знайти користувача з ідентифікатором: " + userId));
 
         user.getSavedPosts().removeIf(postToRemove -> postToRemove.getId() == postId);
         userRepository.save(user);
