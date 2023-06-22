@@ -29,11 +29,11 @@ public class CommentService {
         return commentRepository.save(postComment);
     }
 
-    public boolean delete(int id) {
+    public String delete(int id) {
         if (!commentRepository.existsById(id))
             throw new EntityNotFoundException("Cannot delete. Not found comment with id: " + id);
 
         commentRepository.deleteById(id);
-        return true;
+        return "Коментар видалено";
     }
 }

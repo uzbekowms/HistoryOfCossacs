@@ -2,6 +2,7 @@ package ua.history.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,7 +40,7 @@ public class Post {
     private Date dateEnd;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties({"post", "password"})
+    @JsonIgnoreProperties("post")
     @ToString.Exclude
     private List<PostComment> comments;
 

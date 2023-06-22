@@ -23,7 +23,7 @@ public class User {
     private String nickname;
 
     private String email;
-
+    @JsonIgnore
     private String password;
 
     @Column(name = "profile_picture")
