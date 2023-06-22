@@ -3,18 +3,17 @@ package ua.history.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "posts")
 public class Post {
@@ -39,11 +38,13 @@ public class Post {
     @Column(name = "date_end")
     private Date dateEnd;
 
-    @OneToMany(mappedBy = "post")
-    @JsonIgnoreProperties({"post", "savedPosts"})
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"post", "password"})
+    @ToString.Exclude
     private List<PostComment> comments;
 
     @ManyToMany(mappedBy = "savedPosts")
     @JsonIgnore
+    @ToString.Exclude
     private List<User> users;
 }

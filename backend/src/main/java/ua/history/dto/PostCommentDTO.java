@@ -17,9 +17,9 @@ public class PostCommentDTO {
     private int id;
 
     @NotNull(message = "Post id cannot be null")
-    private int postId;
+    private Integer postId;
     @NotNull(message = "Owner id cannot be null")
-    private int ownerId;
+    private Integer ownerId;
     @NotBlank(message = "Comment cant be blank")
     private String comment;
 
